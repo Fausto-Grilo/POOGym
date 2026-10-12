@@ -41,7 +41,16 @@ class Main{
     }
 
     static void registar_instrutor(Scanner scan) {
-        
+        // Receber dados do usuario
+        System.out.println("Insira o nome do instrutor:");
+        String nome = scan.next();
+        System.out.println("Insira o genero do instrutor:");
+        String genero = scan.next();
+        System.out.println("Insira a formação do instrutor:");
+        String formacao = scan.next();
+
+        //Criar objeto instrutor
+        Instrutor instrutor = new Instrutor(nome, genero, formacao);
     }
 
     static void registar_atividade(Scanner scan) {
