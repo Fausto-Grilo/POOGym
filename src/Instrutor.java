@@ -1,5 +1,4 @@
 public class Instrutor {
-
     //Variaveis
     private String nome;
     private String genero;
