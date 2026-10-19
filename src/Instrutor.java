@@ -1,4 +1,5 @@
 public class Instrutor {
+
     //Variaveis
     private String nome;
     private String genero;
@@ -9,6 +10,10 @@ public class Instrutor {
         this.nome = nome;
         this.genero = genero;
         this.formacao = formacao;
+    }
+
+    public String get_nome(){
+        return nome;
     }
 
 }

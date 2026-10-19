@@ -1,10 +1,9 @@
 public class Socio{
     //Variaveis
-    private String nome;
-    private int id;
-    private String email;
-    private double desconto;
-    //Alterei de protected para private porque o super nas subclasses já inicializa estas variáveis
+    protected String nome;
+    protected int id;
+    protected String email;
+    protected double desconto;
 
     //Construtor
     public Socio(String nome, int id, String email, double desconto){

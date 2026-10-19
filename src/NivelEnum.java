@@ -1,3 +1,3 @@
-public enum NiveisTreinoEnum {
+public enum NivelEnum {
     Iniciação, Intermédio, Avançado
 }

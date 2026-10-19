@@ -4,8 +4,16 @@ public class SocioEmpresa extends Socio {
 
     //Construtor
     public SocioEmpresa(String nome, int id, String email, int nif){
-        super(nome, id, email, 0.2); //alterei de 20 para 0.2
-        this.nif = nif; 
+        super(nome, id, email, 20);
+        this.nif = nif;
+    }
+
+    public void showData(){
+        System.out.println("Nome da Empresa: "+ nome);
+        System.out.println("NIF: " + nif);
+        System.out.println("ID: " + id);
+        System.out.println("Email: " + email);
+        System.out.println("Desconto: " + desconto + "\n");
     }
 
 }
