@@ -1,24 +1,53 @@
+/**
+ * Representa uma data e hora, com ano, mês, dia, hora e minutos.
+ */
 public class Tempo {
+
+    /** Ano da data. */
     private int ano;
+
+    /** Mês da data. */
     private int mes;
+
+    /** Dia da data. */
     private int dia;
+
+    /** Hora do dia. */
     private int hora;
+
+    /** Minutos da hora. */
     private int minutos;
 
 
-    //Construtor
-    public Tempo(int ano, int mes, int dia, int hora, int minutos){
+    // Construtor
+
+    /**
+     * Cria uma data e hora com os valores indicados.
+     *
+     * @param ano ano da data
+     * @param mes mês da data
+     * @param dia dia da data
+     * @param hora hora do dia
+     * @param minutos minutos da hora
+     */
+    public Tempo(int ano, int mes, int dia, int hora, int minutos) {
 
         this.ano = ano;
         this.mes = mes;
         this.dia = dia;
         this.hora = hora;
-        this.minutos= minutos;
+        this.minutos = minutos;
 
     }
 
-    //Metodos
-    public String getDate(){
-        return ano + "-" + mes + "-" + dia + " " + hora + "-" + minutos;
+    // Métodos
+
+    /**
+     * Devolve a data e hora no formato de texto.
+     *
+     * @return data e hora no formato ano-mês-dia hora:minutos
+     */
+    public String getDate() {
+        return ano + "-" + mes + "-" + dia + " " + hora + ":" + minutos;
     }
 }

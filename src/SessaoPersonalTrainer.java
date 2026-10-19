@@ -1,17 +1,36 @@
-public class SessaoPersonalTrainer extends Atividade{
+/**
+ * Representa uma sessão de treino personalizada.
+ * Herda os atributos da classe {@link Atividade}.
+ */
+public class SessaoPersonalTrainer extends Atividade {
 
-    //Variaveis
+    // Variáveis
+
+    /** Nível da sessão de treino. */
     private NivelEnum nivelEnum;
 
-    //Construtor
+    // Construtor
 
-    public SessaoPersonalTrainer(String nome, Instrutor instrutor, Tempo date, int duracao, double preco, NivelEnum nivelEnum){
-        super(nome,instrutor,date,duracao,preco);
+    /**
+     * Cria uma sessão de treino com os dados indicados.
+     *
+     * @param nome nome da sessão
+     * @param instrutor instrutor responsável pela sessão
+     * @param date data e hora da sessão
+     * @param duracao duração da sessão em minutos
+     * @param preco preço da sessão (€)
+     * @param nivelEnum nível da sessão de treino
+     */
+    public SessaoPersonalTrainer(String nome, Instrutor instrutor, Tempo date, int duracao, double preco, NivelEnum nivelEnum) {
+        super(nome, instrutor, date, duracao, preco);
 
         this.nivelEnum = nivelEnum;
     }
 
-    public void showData(){
+    /**
+     * Apresenta os dados da sessão de treino.
+     */
+    public void showData() {
         System.out.println("Nome: " + nome);
         System.out.println("Instrutor: " + instrutor.get_nome());
         System.out.println("Data: " + date.getDate());

@@ -25,6 +25,19 @@ class Main{
         }
     }
 
+    static String lerNIF(Scanner scan) {
+        while (true) {
+            System.out.println("Insira o NIF: ");
+            String nif = scan.nextLine().trim();
+
+            if (nif.matches("[0-9]{9}")) {
+                return nif;
+            }
+
+            System.out.println("O NIF deve conter exatamente 9 algarismos.");
+        }
+    }
+
     static int lerInteiro(Scanner scan, String mensagem, int minimo) {
 
         while (true) {
@@ -42,7 +55,7 @@ class Main{
                 System.out.println(
                         "O valor mínimo permitido é " + minimo + ".");
 
-            } catch (Error e) {
+            } catch (Error error) {
                 System.out.println("Insira um número inteiro válido.");
             }
         }
@@ -52,13 +65,13 @@ class Main{
 
         while (true) {
             System.out.println(
-                    "Insira a data (YYYY-MM-DD-hh-mm):");
+                    "Insira a data (YYYY-MM-DD hh:mm):");
 
             String raw = scan.nextLine().trim();
 
             // Verifica o formato da data.
             if (!raw.matches(
-                    "[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}")) {
+                    "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}")) {
 
                 System.out.println(
                         "Formato inválido. Exemplo: 2026-10-19-14-30");
@@ -66,16 +79,19 @@ class Main{
                 continue;
             }
 
-            String[] partes = raw.split("-");
+            String[] dados = raw.split(" ");
+
+            String[] data = dados[0].split("-");
+            String[] horas = dados[1].split(":");
 
             try {
-                int ano = Integer.parseInt(partes[0]);
-                int mes = Integer.parseInt(partes[1]);
-                int dia = Integer.parseInt(partes[2]);
-                int hora = Integer.parseInt(partes[3]);
-                int minuto = Integer.parseInt(partes[4]);
+                int ano = Integer.parseInt(data[0]);
+                int mes = Integer.parseInt(data[1]);
+                int dia = Integer.parseInt(data[2]);
+                int hora = Integer.parseInt(horas[0]);
+                int minuto = Integer.parseInt(horas[1]);
 
-                // Valida também se a data e a hora existem.
+                // Valida se a data é valida
                 LocalDateTime.of(ano, mes, dia, hora, minuto);
 
                 return new Tempo(ano, mes, dia, hora, minuto);
@@ -122,8 +138,7 @@ class Main{
                 System.out.println( i + " - " + values[i]);
             }
 
-            System.out.println("Escolha uma Modalidade:");
-            int choice = scan.nextInt();
+            int choice = lerInteiro(scan, "Escolha uma modalidade:", 0);
 
             if(choice <= values.length && choice>=0){
                 return values[choice];
@@ -142,8 +157,7 @@ class Main{
                 System.out.println( i + " - " + values[i]);
             }
 
-            System.out.println("Escolha um Nivel:");
-            int choice = scan.nextInt();
+            int choice = lerInteiro(scan, "Escolha um Nivel: ", 0);
 
             if(choice <= values.length && choice>=0){
                 return values[choice];
@@ -173,14 +187,16 @@ class Main{
         //Recolher Dados
         String nome = lerTexto(scan, "Insira o nome: ");
 
-        int nif = lerInteiro(scan, "Insira o NIF: ", 0);
+        int id = lerInteiro(scan, "Insira o ID: ", 0);
+
+        String nif = lerNIF(scan);
 
         String email = lerTexto(scan, "Insira o email: ");
 
         int anoNascimento = lerInteiro(scan, "Insira o ano de nascimento: ", 1900);
 
         //Registar socio empresa
-        return new SocioEmpresa(nome, nif, email, nif);
+        return new SocioEmpresa(nome, id, email, nif);
     }
 
     static Instrutor registar_instrutor(Scanner scan) {
@@ -311,7 +327,7 @@ class Main{
             System.out.println("11 - Mostrar o valor de um sócio");
             System.out.println("12 - Sair");
 
-            int choice = scan.nextInt();
+            int choice = lerInteiro(scan, "Escolha: ", 1);
 
             switch (choice) {
                 case 1:
@@ -327,7 +343,7 @@ class Main{
                     System.out.println("1 - Registrar aula de grupo");
                     System.out.println("2 - Registrar sessão personal trainer");
 
-                    int c = scan.nextInt();
+                    int c = lerInteiro(scan, "Escolha: ", 1);
                     switch (c){
                         case 1:
                             aulasGrupo.add(registar_aula_de_grupo(scan, instrutors));
