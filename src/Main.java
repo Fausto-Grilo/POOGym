@@ -6,6 +6,11 @@ import java.util.Scanner;
 
 class Main{
 
+    static ArrayList<SocioEmpresa> sociosEmpresa = new ArrayList<>();
+    static ArrayList<SocioIndividual> sociosIndividual = new ArrayList<>();
+    static ArrayList<Instrutor> instrutors = new ArrayList<>();
+    static ArrayList<Marcacao> marcacoes = new ArrayList<>(); //mudei as listas para cima para se poderem aceder
+
     static SocioIndividual registar_socio_individual(Scanner scan) {
         //Recolher Dados
         System.out.println("Insira o nome do socio individual:");
@@ -62,15 +67,27 @@ class Main{
     }
 
     static void listar_ativadades() {
-        
     }
 
     static void criar_marcacao() {
         
     }
 
+    // PREENCHI ISTO!!
     static void listar_marcacao() {
-        
+        double totalFaturado = 0.0;
+        if (marcacoes.isEmpty()) {
+            System.out.println("Ainda não existem marcações registadas.");
+            return;
+        }
+
+        System.out.println("----- LISTA DE MARCAÇÕES -----");
+        for (Marcacao book: marcacoes){
+            System.out.println(book); //toString() na classe Marcacao
+            totalFaturado += book.getCustoFinal();
+
+            System.out.println("Total faturado: " + totalFaturado + "€");
+        }
     }
 
     static void resumir_ativadade() {
@@ -88,12 +105,6 @@ class Main{
     public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
-
-        ArrayList<SocioEmpresa> sociosEmpresa = new ArrayList<>();
-        ArrayList<SocioIndividual> sociosIndividual = new ArrayList<>();
-        ArrayList<Instrutor> instrutors = new ArrayList<>();
-
-
 
         //Main Loop
         while (true) {

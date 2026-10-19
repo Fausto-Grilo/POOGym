@@ -3,12 +3,11 @@ import java.time.LocalDateTime;
 
 public class Atividade {
     //Variáveis
-    private String nome;
-    private Instrutor instrutorAtividade;
-    private LocalDateTime dataHora; //LocalDateTime dá para meter a data e a hora mais precisamente
-    private int duracao;
-    private double custoBase;
-    //Meti as variáveis private porque o super nas subclasses inicializa-as
+    protected String nome;
+    protected Instrutor instrutorAtividade;
+    protected LocalDateTime dataHora; //LocalDateTime dá para meter a data e a hora mais precisamente
+    protected int duracao;
+    protected double custoBase;
 
     //Construtor
     public Atividade(String nome, Instrutor instrutorAtividade, int duracao, LocalDateTime dataHora, double custoBase){
@@ -20,6 +19,6 @@ public class Atividade {
     }
 
     //Metodo
-    public double getCustoBase(){ return this.custoBase; }
-
+    public double getCustoBase(){ return this.custoBase;}
+    public String getNome(){return this.nome;}
 }
