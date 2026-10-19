@@ -1,4 +1,4 @@
-public class Socio{
+public class Socio {
     //Variaveis
     private String nome;
     private int id;
@@ -7,10 +7,13 @@ public class Socio{
     //Alterei de protected para private porque o super nas subclasses já inicializa estas variáveis
 
     //Construtor
-    public Socio(String nome, int id, String email, double desconto){
+    public Socio(String nome, int id, String email, double desconto) {
         this.nome = nome;
         this.id = id;
         this.email = email;
         this.desconto = desconto;
     }
+
+    //Metodo
+    private double getDesconto() {return this.desconto; }
 }

@@ -1,3 +1,3 @@
 public enum NiveisTreinoEnum {
-    Iniciação, Intermédio, Avançado
+    Iniciacao, Intermedio, Avancado
 }
