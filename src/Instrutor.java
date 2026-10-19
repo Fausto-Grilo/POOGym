@@ -12,4 +12,8 @@ public class Instrutor {
         this.formacao = formacao;
     }
 
+    public String get_nome(){
+        return nome;
+    }
+
 }

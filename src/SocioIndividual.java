@@ -19,4 +19,14 @@ public class SocioIndividual extends Socio {
         return 0;
     }
 
+    public void showData(){
+        System.out.println("Nome: "+ nome);
+        System.out.println("Ano de Nascimento: " + anoNascimento);
+        System.out.println("ID: " + id);
+        System.out.println("Email: " + email);
+        System.out.println("Desconto: " + desconto + "\n");
+    }
+
+
+
 }

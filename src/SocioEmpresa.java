@@ -7,4 +7,13 @@ public class SocioEmpresa extends Socio {
         super(nome, id, email, 20);
         this.nif = nif; 
     }
+
+    public void showData(){
+        System.out.println("Nome da Empresa: "+ nome);
+        System.out.println("NIF: " + nif);
+        System.out.println("ID: " + id);
+        System.out.println("Email: " + email);
+        System.out.println("Desconto: " + desconto + "\n");
+    }
+
 }
