@@ -32,7 +32,7 @@ public class SocioEmpresa extends Socio {
         System.out.println("NIF: " + nif);
         System.out.println("ID: " + id);
         System.out.println("Email: " + email);
-        System.out.println("Desconto: " + desconto + "\n");
+        System.out.println("Desconto: " + desconto * 100 + "%\n");
     }
 
 

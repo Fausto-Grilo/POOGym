@@ -51,7 +51,7 @@ public class SocioIndividual extends Socio {
         System.out.println("Ano de Nascimento: " + anoNascimento);
         System.out.println("ID: " + id);
         System.out.println("Email: " + email);
-        System.out.println("Desconto: " + desconto + "\n");
+        System.out.println("Desconto: " + desconto * 100 + "%\n");
     }
 
 

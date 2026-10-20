@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
-//Alteração Teste
 
 class Main{
+
+
+    static int idCount = 0;
 
     //Lógica
     static String lerTexto(Scanner scan, String mensagem) {
@@ -338,7 +340,10 @@ class Main{
         //Recolher Dados
         String nome = lerTexto(scan, "Insira o nome: ");
 
-        int id = lerInteiro(scan, "Escolha um id: ", 0);
+        int id = idCount;
+        idCount += 1;
+
+
 
         String email = lerTexto(scan, "Insira o email: ");
 
@@ -352,7 +357,9 @@ class Main{
         //Recolher Dados
         String nome = lerTexto(scan, "Insira o nome: ");
 
-        int id = lerInteiro(scan, "Insira o ID: ", 0);
+        int id = idCount;
+        idCount += 1;
+
 
         String nif = lerNIF(scan);
 
@@ -431,29 +438,49 @@ class Main{
     }
 
     static void listar_socios(ArrayList<SocioEmpresa> sociosEmpresa, ArrayList<SocioIndividual> socioIndividuals) {
-        System.out.println("\nSócios Individuais\n");
-        for(int i = 0; i < socioIndividuals.size(); i++){
-            socioIndividuals.get(i).showData();
+
+        if(socioIndividuals.isEmpty() && sociosEmpresa.isEmpty()) {
+            System.err.println("Não existem sócios registados");
+            return;
         }
 
-        System.out.println("\nSócios Empresas\n");
-        for(int i = 0; i< sociosEmpresa.size(); i++){
-            sociosEmpresa.get(i).showData();
+        if(!socioIndividuals.isEmpty()){
+            System.out.println("\nSócios Individuais\n");
+            for(int i = 0; i < socioIndividuals.size(); i++){
+                socioIndividuals.get(i).showData();
+            }
         }
+
+        if(!sociosEmpresa.isEmpty()){
+            System.out.println("\nSócios Empresas\n");
+            for(int i = 0; i< sociosEmpresa.size(); i++){
+                sociosEmpresa.get(i).showData();
+            }
+        }
+
     }
 
     static void listar_ativadades(ArrayList<AulaGrupo> aulasGrupo, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
 
-        System.out.println("\nAulas de Grupo\n");
-
-        for(int i = 0; i < aulasGrupo.size(); i++){
-            aulasGrupo.get(i).showData();
+        if(aulasGrupo.isEmpty() && sessoesPersonalTrainer.isEmpty()){
+            System.err.println("Não Existe Atividades Registadas");
+            return;
         }
 
-        System.out.println("\nSessões de Personal Trainer\n");
+        if(!aulasGrupo.isEmpty()) {
+            System.out.println("\nAulas de Grupo\n");
 
-        for(int i = 0; i < sessoesPersonalTrainer.size(); i++){
-            sessoesPersonalTrainer.get(i).showData();
+            for (int i = 0; i < aulasGrupo.size(); i++) {
+                aulasGrupo.get(i).showData();
+            }
+        }
+
+        if(!sessoesPersonalTrainer.isEmpty()){
+            System.out.println("\nSessões de Personal Trainer\n");
+
+            for(int i = 0; i < sessoesPersonalTrainer.size(); i++){
+                sessoesPersonalTrainer.get(i).showData();
+            }
         }
     }
 
@@ -477,7 +504,10 @@ class Main{
 
     static void listar_marcacao(ArrayList<Marcacao> marcacoes) {
 
-        if(marcacoes.isEmpty())return;
+        if(marcacoes.isEmpty()) {
+            System.err.println("Não Existe Marcações");
+            return;
+        };
 
         for (int i = 0; i < marcacoes.size(); i++){
             if(marcacoes.get(i) == null)continue;
@@ -495,7 +525,7 @@ class Main{
     static void listar_atividade_popular(ArrayList<Marcacao> marcacoes) {
 
         if (marcacoes.isEmpty()) {
-            System.out.println("Não existem marcações registadas.");
+            System.err.println("\nNão existem marcações registadas.\n");
             return;
         }
 
@@ -530,13 +560,40 @@ class Main{
 
     }
 
-    static void mostrar_valor_socio(){
+    static void mostrar_valor_socio(Scanner scan, ArrayList<Marcacao> marcacoes){
+
+        int id = lerInteiro(scan, "Insira o ID do sócio", 0);
+
+
+        double valorTotal = 0;
+        double valorPoupado = 0;
+
+
+        if(id < idCount){
+
+
+            for(Marcacao marcacao : marcacoes){
+                if(marcacao.getSocio().id == id){
+                    valorTotal += marcacao.getCustoFinal();
+                    valorPoupado += marcacao.getValorPoupado();
+                }
+            }
+
+            System.out.println("\nValor Gasto: " + valorTotal + "\nValor Poupado: " + valorPoupado + "\n");
+        }
+        else{
+            System.err.println("\nID invalido\n");
+        }
+
+
 
     }
 
     public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
+
+        int idCount = 0;
 
         ArrayList<SocioEmpresa> sociosEmpresa = new ArrayList<>();
         ArrayList<SocioIndividual> sociosIndividual = new ArrayList<>();
@@ -613,7 +670,7 @@ class Main{
                     listar_atividade_popular(marcacoes);
                     break;
                 case 11:
-                    mostrar_valor_socio();
+                    mostrar_valor_socio(scan, marcacoes);
                     break;
                 case 12:
                     scan.close();

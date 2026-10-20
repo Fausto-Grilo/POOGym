@@ -25,7 +25,6 @@ public class Marcacao {
         this.custoFinal = custoBase - valorPoupado;
     }
 
-    public double getCustoFinal(){ return custoFinal;}
 
     public String showData() {
         return "Sócio: " + socio.getNome() + "\nAtividade: " + atividade.getNome() + "\nData e Hora: "
@@ -33,7 +32,14 @@ public class Marcacao {
                 + "\n\n";
     }
 
+    public double getCustoFinal(){ return custoFinal;}
+
+    public double getValorPoupado() {
+        return valorPoupado;
+    }
+
     public Atividade getAtividade(){
         return atividade;
     }
+    public Socio getSocio(){return socio;}
 }
