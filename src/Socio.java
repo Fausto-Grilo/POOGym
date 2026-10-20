@@ -1,5 +1,8 @@
 /**
  * Representa um sócio, com os respetivos dados pessoais e desconto.
+ *
+ * @author Fausto Henriques
+ * @author Rodrigo Correia
  */
 public class Socio {
 
@@ -17,8 +20,6 @@ public class Socio {
     /** Desconto atribuído ao sócio. */
     protected double desconto;
 
-    // Construtor
-
     /**
      * Cria um sócio com os dados indicados.
      *
@@ -34,12 +35,21 @@ public class Socio {
         this.desconto = desconto;
     }
 
-
+    /**
+     * Devolve o nome do sócio.
+     *
+     * @return nome do sócio
+     */
     public String getNome() {
         return nome;
     }
-    public double getDesconto(){return desconto;}
 
-
-
+    /**
+     * Devolve o desconto atribuído ao sócio.
+     *
+     * @return desconto do sócio
+     */
+    public double getDesconto() {
+        return desconto;
+    }
 }

@@ -1,5 +1,8 @@
 /**
  * Representa uma data e hora, com ano, mês, dia, hora e minutos.
+ *
+ * @author Fausto Henriques
+ * @author Rodrigo Correia
  */
 public class Tempo {
 
@@ -18,9 +21,6 @@ public class Tempo {
     /** Minutos da hora. */
     private int minutos;
 
-
-    // Construtor
-
     /**
      * Cria uma data e hora com os valores indicados.
      *
@@ -31,16 +31,12 @@ public class Tempo {
      * @param minutos minutos da hora
      */
     public Tempo(int ano, int mes, int dia, int hora, int minutos) {
-
         this.ano = ano;
         this.mes = mes;
         this.dia = dia;
         this.hora = hora;
         this.minutos = minutos;
-
     }
-
-    // Métodos
 
     /**
      * Devolve a data e hora no formato de texto.
@@ -51,8 +47,30 @@ public class Tempo {
         return ano + "-" + mes + "-" + dia + " " + hora + ":" + minutos;
     }
 
-    public String getSimpleDate(){return ano + "-" + mes + "-" + dia;}
-    public String getHourAndMinutes(){return  hora+ ":" + minutos;}
+    /**
+     * Devolve apenas a data.
+     *
+     * @return data no formato ano-mês-dia
+     */
+    public String getSimpleDate() {
+        return ano + "-" + mes + "-" + dia;
+    }
 
-    public int getMinutos(){return hora*60 + minutos;}
+    /**
+     * Devolve a hora e os minutos no formato de texto.
+     *
+     * @return hora no formato hora:minutos
+     */
+    public String getHourAndMinutes() {
+        return hora + ":" + minutos;
+    }
+
+    /**
+     * Converte a hora e os minutos num total de minutos.
+     *
+     * @return total de minutos correspondentes à hora e aos minutos
+     */
+    public int getMinutos() {
+        return hora * 60 + minutos;
+    }
 }

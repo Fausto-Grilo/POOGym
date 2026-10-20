@@ -3,12 +3,29 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Gere o menu principal e as operações do sistema de gestão
+ * de sócios, atividades e marcações.
+ *
+ * @author Fausto Henriques
+ * @author Rodrigo Correia
+ */
+class Main {
 
-class Main{
-
+    /** Contador utilizado para atribuir IDs aos sócios. */
     static int idCount = 0;
 
-    //Lógica
+    // Lógica
+
+    /**
+     * Lê um texto e verifica se está preenchido e se corresponde
+     * ao formato indicado.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @param mensagem mensagem apresentada ao utilizador
+     * @param regex formato que o texto deve cumprir, ou null
+     * @return texto introduzido pelo utilizador
+     */
     static String lerTexto(Scanner scan, String mensagem, String regex) {
         while (true) {
             System.out.println(mensagem);
@@ -16,22 +33,29 @@ class Main{
             String texto = scan.nextLine().trim();
 
             if (!texto.isEmpty()) {
-
-                if(regex == null){
+                if (regex == null) {
                     return texto;
                 }
 
-                if(texto.matches(regex)){
+                if (texto.matches(regex)) {
                     return texto;
-                }else {
-                    System.out.println("O texto não está no formato correto. Tente novamente.");
+                } else {
+                    System.out.println(
+                            "O texto não está no formato correto. Tente novamente.");
                 }
-            }else {
-                System.out.println("O texto não pode estar vazio. Tente novamente.");
+            } else {
+                System.out.println(
+                        "O texto não pode estar vazio. Tente novamente.");
             }
         }
     }
 
+    /**
+     * Lê um NIF e verifica se contém exatamente nove algarismos.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @return NIF introduzido
+     */
     static String lerNIF(Scanner scan) {
         while (true) {
             System.out.println("Insira o NIF:");
@@ -42,10 +66,19 @@ class Main{
                 return nif;
             }
 
-            System.out.println("O NIF deve conter exatamente 9 algarismos. Tente novamente.");
+            System.out.println(
+                    "O NIF deve conter exatamente 9 algarismos. Tente novamente.");
         }
     }
 
+    /**
+     * Lê um número inteiro e verifica se respeita o valor mínimo.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @param mensagem mensagem apresentada ao utilizador
+     * @param minimo valor mínimo permitido
+     * @return número inteiro introduzido
+     */
     static int lerInteiro(Scanner scan, String mensagem, int minimo) {
         while (true) {
             System.out.println(mensagem);
@@ -59,14 +92,22 @@ class Main{
                     return valor;
                 }
 
-                System.out.println("O valor mínimo permitido é " + minimo + ". Tente novamente.");
+                System.out.println(
+                        "O valor mínimo permitido é " + minimo + ". Tente novamente.");
 
             } catch (NumberFormatException e) {
-                System.out.println("Insira um número inteiro válido. Tente novamente.");
+                System.out.println(
+                        "Insira um número inteiro válido. Tente novamente.");
             }
         }
     }
 
+    /**
+     * Lê uma data e hora e verifica se os valores são válidos.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @return data e hora introduzidas
+     */
     static Tempo lerData(Scanner scan) {
         while (true) {
             System.out.println("Insira a data (YYYY-MM-DD HH:mm):");
@@ -74,7 +115,8 @@ class Main{
             String raw = scan.nextLine().trim();
 
             if (!raw.matches("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}")) {
-                System.out.println("Formato inválido. Exemplo: 2026-10-19 14:30. Tente novamente.");
+                System.out.println(
+                        "Formato inválido. Exemplo: 2026-10-19 14:30. Tente novamente.");
                 continue;
             }
 
@@ -101,9 +143,17 @@ class Main{
         }
     }
 
-    static Instrutor selecionarInstrutor(Scanner scan, ArrayList<Instrutor> instrutores) {
-        if (instrutores.isEmpty()) {
+    /**
+     * Permite escolher um instrutor da lista disponível.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @param instrutores lista de instrutores registados
+     * @return instrutor escolhido, ou null se não existirem instrutores
+     */
+    static Instrutor selecionarInstrutor(
+            Scanner scan, ArrayList<Instrutor> instrutores) {
 
+        if (instrutores.isEmpty()) {
             System.err.println("Não existem instrutores registados.");
             return null;
         }
@@ -112,12 +162,10 @@ class Main{
             System.out.println("Lista de Instrutores:");
 
             for (int i = 0; i < instrutores.size(); i++) {
-                System.out.println(
-                        i + " - " + instrutores.get(i).get_nome());
+                System.out.println(i + " - " + instrutores.get(i).get_nome());
             }
 
-            int escolha = lerInteiro(
-                    scan, "Escolha um Instrutor:", 0);
+            int escolha = lerInteiro(scan, "Escolha um Instrutor:", 0);
 
             if (escolha < instrutores.size()) {
                 return instrutores.get(escolha);
@@ -127,9 +175,17 @@ class Main{
         }
     }
 
-    static SocioIndividual selecionarSocioIndividual(Scanner scan, ArrayList<SocioIndividual> sociosIndividual){
-        if (sociosIndividual.isEmpty()) {
+    /**
+     * Permite escolher um sócio individual da lista disponível.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @param sociosIndividual lista de sócios individuais
+     * @return sócio escolhido, ou null se a lista estiver vazia
+     */
+    static SocioIndividual selecionarSocioIndividual(
+            Scanner scan, ArrayList<SocioIndividual> sociosIndividual) {
 
+        if (sociosIndividual.isEmpty()) {
             System.err.println("Não existem socios individuais registados.");
             return null;
         }
@@ -153,9 +209,17 @@ class Main{
         }
     }
 
-    static SocioEmpresa selecionarSocioEmpresa(Scanner scan, ArrayList<SocioEmpresa> sociosEmpresa){
-        if (sociosEmpresa.isEmpty()) {
+    /**
+     * Permite escolher um sócio empresa da lista disponível.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @param sociosEmpresa lista de sócios empresa
+     * @return sócio escolhido, ou null se a lista estiver vazia
+     */
+    static SocioEmpresa selecionarSocioEmpresa(
+            Scanner scan, ArrayList<SocioEmpresa> sociosEmpresa) {
 
+        if (sociosEmpresa.isEmpty()) {
             System.err.println("Não existem socios empresa registados.");
             return null;
         }
@@ -179,76 +243,110 @@ class Main{
         }
     }
 
-    static Socio selecionarSocio(Scanner scan, ArrayList<SocioIndividual> sociosIndividual, ArrayList<SocioEmpresa> sociosEmpresa){
-        while(true) {
+    /**
+     * Permite escolher o tipo de sócio e selecionar um sócio registado.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @param sociosIndividual lista de sócios individuais
+     * @param sociosEmpresa lista de sócios empresa
+     * @return sócio escolhido, ou null se o utilizador voltar atrás
+     */
+    static Socio selecionarSocio(
+            Scanner scan,
+            ArrayList<SocioIndividual> sociosIndividual,
+            ArrayList<SocioEmpresa> sociosEmpresa) {
+
+        while (true) {
             System.out.println("1- Sócio Individual");
             System.out.println("2- Socio Empresa");
             System.out.println("3- Back");
 
             int choice = lerInteiro(scan, "Escolha", 1);
 
-            switch (choice){
+            switch (choice) {
                 case 1:
-                    Socio sI = selecionarSocioIndividual(scan, sociosIndividual);
-                    if(sI != null){
+                    Socio sI = selecionarSocioIndividual(
+                            scan, sociosIndividual);
+                    if (sI != null) {
                         return sI;
                     }
+
                 case 2:
-                    Socio sE = selecionarSocioEmpresa(scan, sociosEmpresa);
-                    if(sE != null){
+                    Socio sE = selecionarSocioEmpresa(
+                            scan, sociosEmpresa);
+                    if (sE != null) {
                         return sE;
                     }
                     continue;
+
                 case 3:
                     return null;
+
                 default:
                     continue;
             }
         }
-
     }
 
-    static ModalidadeEnum modalidadeEnum(Scanner scan){
+    /**
+     * Apresenta as modalidades disponíveis e permite escolher uma.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @return modalidade escolhida
+     */
+    static ModalidadeEnum modalidadeEnum(Scanner scan) {
         while (true) {
             System.out.println("Lista de Modalidades:");
 
-
             ModalidadeEnum values[] = ModalidadeEnum.values();
 
-            for(int i = 0; i < values.length; i++) {
-                System.out.println( i + " - " + values[i]);
+            for (int i = 0; i < values.length; i++) {
+                System.out.println(i + " - " + values[i]);
             }
 
             int choice = lerInteiro(scan, "Escolha uma modalidade:", 0);
 
-            if(choice <= values.length && choice>=0){
+            if (choice <= values.length && choice >= 0) {
                 return values[choice];
             }
         }
     }
 
-    static NivelEnum nivelEnum(Scanner scan){
+    /**
+     * Apresenta os níveis disponíveis e permite escolher um.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @return nível escolhido
+     */
+    static NivelEnum nivelEnum(Scanner scan) {
         while (true) {
             System.out.println("Lista de Niveis:");
 
-
             NivelEnum values[] = NivelEnum.values();
 
-            for(int i = 0; i < values.length; i++) {
-                System.out.println( i + " - " + values[i]);
+            for (int i = 0; i < values.length; i++) {
+                System.out.println(i + " - " + values[i]);
             }
 
             int choice = lerInteiro(scan, "Escolha um Nivel: ", 0);
 
-            if(choice <= values.length && choice>=0){
+            if (choice <= values.length && choice >= 0) {
                 return values[choice];
             }
         }
     }
 
-    static AulaGrupo selecionarAulaGrupo(Scanner scan, ArrayList<AulaGrupo> aulasGrupo){
-        if (aulasGrupo.isEmpty()) {
+    /**
+     * Permite escolher uma aula de grupo da lista disponível.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @param aulasGrupo lista de aulas de grupo registadas
+     * @return aula escolhida, ou null se a lista estiver vazia
+     */
+    static AulaGrupo selecionarAulaGrupo(
+            Scanner scan, ArrayList<AulaGrupo> aulasGrupo) {
 
+        if (aulasGrupo.isEmpty()) {
             System.err.println("Não existem aulas de grupo registadas.");
             return null;
         }
@@ -272,9 +370,18 @@ class Main{
         }
     }
 
-    static SessaoPersonalTrainer selecionarSessaoPersonalTrainer(Scanner scan, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer){
-        if (sessoesPersonalTrainer.isEmpty()) {
+    /**
+     * Permite escolher uma sessão de Personal Training da lista disponível.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @param sessoesPersonalTrainer lista de sessões registadas
+     * @return sessão escolhida, ou null se a lista estiver vazia
+     */
+    static SessaoPersonalTrainer selecionarSessaoPersonalTrainer(
+            Scanner scan,
+            ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
 
+        if (sessoesPersonalTrainer.isEmpty()) {
             System.err.println("Não existem sessões de PT registadas.");
             return null;
         }
@@ -298,44 +405,68 @@ class Main{
         }
     }
 
-    static Atividade selecionarAtividade(Scanner scan, ArrayList<AulaGrupo> aulasGrupo, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer){
+    /**
+     * Permite escolher o tipo de atividade e selecionar uma atividade registada.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @param aulasGrupo lista de aulas de grupo
+     * @param sessoesPersonalTrainer lista de sessões de Personal Training
+     * @return atividade escolhida, ou null se o utilizador voltar atrás
+     */
+    static Atividade selecionarAtividade(
+            Scanner scan,
+            ArrayList<AulaGrupo> aulasGrupo,
+            ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
 
-        while(true) {
+        while (true) {
             System.out.println("1- Aula de Grupo");
             System.out.println("2- Sessão Personal Training");
             System.out.println("3- Back");
 
             int choice = lerInteiro(scan, "Escolha", 1);
 
-            switch (choice){
+            switch (choice) {
                 case 1:
                     Atividade aG = selecionarAulaGrupo(scan, aulasGrupo);
-                    if(aG != null){
+                    if (aG != null) {
                         return aG;
                     }
                     continue;
+
                 case 2:
-                    Atividade sPT = selecionarSessaoPersonalTrainer(scan, sessoesPersonalTrainer);
-                    if(sPT != null){
+                    Atividade sPT = selecionarSessaoPersonalTrainer(
+                            scan, sessoesPersonalTrainer);
+                    if (sPT != null) {
                         return sPT;
                     }
                     continue;
+
                 case 3:
                     return null;
+
                 default:
                     continue;
             }
         }
-
-
-
     }
 
-
-    static boolean verificarSobrePosicoes(Socio socio, ArrayList<Marcacao> marcacoes, Tempo tempo, int duracao){
+    /**
+     * Verifica se o sócio já tem uma marcação que coincide com o horário
+     * da atividade escolhida.
+     *
+     * @param socio sócio que pretende fazer a marcação
+     * @param marcacoes lista de marcações existentes
+     * @param tempo data e hora da nova atividade
+     * @param duracao duração da nova atividade em minutos
+     * @return true se não existir sobreposição, false caso contrário
+     */
+    static boolean verificarSobrePosicoes(
+            Socio socio,
+            ArrayList<Marcacao> marcacoes,
+            Tempo tempo,
+            int duracao) {
 
         for (Marcacao marcacao : marcacoes) {
-
             if (marcacao.getSocio().equals(socio)) {
 
                 Tempo dataExistente = marcacao.getAtividade().getDate();
@@ -351,9 +482,7 @@ class Main{
                     int fimNovo = inicioNovo + duracao;
 
                     if (inicioNovo < fimExistente && fimNovo > inicioExistente) {
-
                         System.err.println("\nSobreposição de atividades.\n");
-
                         return false;
                     }
                 }
@@ -363,47 +492,64 @@ class Main{
         return true;
     }
 
-
     // Registos
 
+    /**
+     * Recolhe os dados necessários e regista um sócio individual.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @return novo sócio individual
+     */
     static SocioIndividual registar_socio_individual(Scanner scan) {
-        //Recolher Dados
+        // Recolher dados
         String nome = lerTexto(scan, "Insira o nome: ", null);
 
         int id = idCount;
         idCount += 1;
 
+        String email = lerTexto(
+                scan,
+                "Insira o email (ex: nome@gmail.com): ",
+                "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
 
+        int anoNascimento = lerInteiro(
+                scan, "Insira o ano de nascimento: ", 1900);
 
-        String email = lerTexto(scan, "Insira o email (ex: nome@gmail.com): ", "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
-
-        int anoNascimento = lerInteiro(scan, "Insira o ano de nascimento: ", 1900);
-
-        //Registar socio individual
+        // Registar sócio individual
         return new SocioIndividual(nome, id, email, anoNascimento);
     }
 
+    /**
+     * Recolhe os dados necessários e regista um sócio empresa.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @return novo sócio empresa
+     */
     static SocioEmpresa registar_socio_empresa(Scanner scan) {
-        //Recolher Dados
+        // Recolher dados
         String nome = lerTexto(scan, "Insira o nome: ", null);
 
         int id = idCount;
         idCount += 1;
-
 
         String nif = lerNIF(scan);
 
         String email = lerTexto(scan, "Insira o email: ", null);
 
-        int anoNascimento = lerInteiro(scan, "Insira o ano de nascimento: ", 1900);
+        int anoNascimento = lerInteiro(
+                scan, "Insira o ano de nascimento: ", 1900);
 
-        //Registar socio empresa
+        // Registar sócio empresa
         return new SocioEmpresa(nome, id, email, nif);
     }
 
+    /**
+     * Recolhe os dados necessários e regista um instrutor.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @return novo instrutor
+     */
     static Instrutor registar_instrutor(Scanner scan) {
-
-
         // Receber dados
         String nome = lerTexto(scan, "Insira o Nome:", null);
 
@@ -411,93 +557,125 @@ class Main{
 
         String formacao = lerTexto(scan, "Insira a Formação:", null);
 
-        //Criar objeto instrutor
+        // Criar objeto instrutor
         return new Instrutor(nome, genero, formacao);
     }
 
-    static AulaGrupo registar_aula_de_grupo(Scanner scan, ArrayList<Instrutor> instrutores) {
+    /**
+     * Recolhe os dados e regista uma nova aula de grupo.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @param instrutores lista de instrutores disponíveis
+     * @return nova aula de grupo, ou null se não for escolhido um instrutor
+     */
+    static AulaGrupo registar_aula_de_grupo(
+            Scanner scan, ArrayList<Instrutor> instrutores) {
 
         String nome = lerTexto(scan, "Insira o nome da Aula:", null);
 
         Tempo data = lerData(scan);
 
-        int duracao = lerInteiro(scan, "Insira a duração (minutos):", 1);
+        int duracao = lerInteiro(
+                scan, "Insira a duração (minutos):", 1);
 
-        int preco = lerInteiro(scan, "Insira o preço (€):", 0);
+        int preco = lerInteiro(
+                scan, "Insira o preço (€):", 0);
 
         Instrutor instrutor = selecionarInstrutor(scan, instrutores);
 
-        if(instrutor == null){
+        if (instrutor == null) {
             return null;
         }
 
-
         ModalidadeEnum modalidade = modalidadeEnum(scan);
 
-        int maxCap = lerInteiro(scan, "Insira a capacidade máxima: ", 1);
+        int maxCap = lerInteiro(
+                scan, "Insira a capacidade máxima: ", 1);
 
         return new AulaGrupo(
                 nome, instrutor, data, duracao, preco, modalidade, maxCap);
-
     }
 
-    static SessaoPersonalTrainer registar_sessao_personal(Scanner scan, ArrayList<Instrutor> instrutores) {
+    /**
+     * Recolhe os dados e regista uma sessão de Personal Training.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @param instrutores lista de instrutores disponíveis
+     * @return nova sessão, ou null se não for escolhido um instrutor
+     */
+    static SessaoPersonalTrainer registar_sessao_personal(
+            Scanner scan, ArrayList<Instrutor> instrutores) {
 
         String nome = lerTexto(scan, "Insira o nome da Sessão:", null);
 
         Tempo data = lerData(scan);
 
-        int duracao = lerInteiro(scan, "Insira a duração (minutos):", 1);
+        int duracao = lerInteiro(
+                scan, "Insira a duração (minutos):", 1);
 
-        int preco = lerInteiro(scan, "Insira o preço (€):", 0);
+        int preco = lerInteiro(
+                scan, "Insira o preço (€):", 0);
 
         Instrutor instrutor = selecionarInstrutor(scan, instrutores);
 
-        if(instrutor == null){
+        if (instrutor == null) {
             return null;
         }
 
-
         NivelEnum nivel = nivelEnum(scan);
-
-
 
         return new SessaoPersonalTrainer(
                 nome, instrutor, data, duracao, preco, nivel);
-
     }
 
-    static void listar_socios(ArrayList<SocioEmpresa> sociosEmpresa, ArrayList<SocioIndividual> socioIndividuals) {
+    /**
+     * Mostra os sócios individuais e os sócios empresa registados.
+     *
+     * @param sociosEmpresa lista de sócios empresa
+     * @param socioIndividuals lista de sócios individuais
+     */
+    static void listar_socios(
+            ArrayList<SocioEmpresa> sociosEmpresa,
+            ArrayList<SocioIndividual> socioIndividuals) {
 
-        if(socioIndividuals.isEmpty() && sociosEmpresa.isEmpty()) {
+        if (socioIndividuals.isEmpty() && sociosEmpresa.isEmpty()) {
             System.err.println("Não existem sócios registados");
             return;
         }
 
-        if(!socioIndividuals.isEmpty()){
+        if (!socioIndividuals.isEmpty()) {
             System.out.println("\nSócios Individuais\n");
-            for(int i = 0; i < socioIndividuals.size(); i++){
+
+            for (int i = 0; i < socioIndividuals.size(); i++) {
                 socioIndividuals.get(i).showData();
             }
         }
 
-        if(!sociosEmpresa.isEmpty()){
+        if (!sociosEmpresa.isEmpty()) {
             System.out.println("\nSócios Empresas\n");
-            for(int i = 0; i< sociosEmpresa.size(); i++){
+
+            for (int i = 0; i < sociosEmpresa.size(); i++) {
                 sociosEmpresa.get(i).showData();
             }
         }
-
     }
 
-    static void listar_ativadades(ArrayList<AulaGrupo> aulasGrupo, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
+    /**
+     * Mostra as aulas de grupo e as sessões de Personal Training registadas.
+     *
+     * @param aulasGrupo lista de aulas de grupo
+     * @param sessoesPersonalTrainer lista de sessões de Personal Training
+     */
+    static void listar_ativadades(
+            ArrayList<AulaGrupo> aulasGrupo,
+            ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
 
-        if(aulasGrupo.isEmpty() && sessoesPersonalTrainer.isEmpty()){
+        if (aulasGrupo.isEmpty() && sessoesPersonalTrainer.isEmpty()) {
             System.err.println("Não Existe Atividades Registadas");
             return;
         }
 
-        if(!aulasGrupo.isEmpty()) {
+        if (!aulasGrupo.isEmpty()) {
             System.out.println("\nAulas de Grupo\n");
 
             for (int i = 0; i < aulasGrupo.size(); i++) {
@@ -505,23 +683,40 @@ class Main{
             }
         }
 
-        if(!sessoesPersonalTrainer.isEmpty()){
+        if (!sessoesPersonalTrainer.isEmpty()) {
             System.out.println("\nSessões de Personal Trainer\n");
 
-            for(int i = 0; i < sessoesPersonalTrainer.size(); i++){
+            for (int i = 0; i < sessoesPersonalTrainer.size(); i++) {
                 sessoesPersonalTrainer.get(i).showData();
             }
         }
     }
 
-    static Marcacao criar_marcacao(Scanner scan, ArrayList<Marcacao> marcacoes, ArrayList<SocioIndividual> sociosIndividual, ArrayList<SocioEmpresa> sociosEmpresa, ArrayList<AulaGrupo> aulasGrupo, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
+    /**
+     * Cria uma marcação depois de selecionar um sócio e uma atividade.
+     * Antes de a criar, verifica se existe sobreposição de horários.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @param marcacoes lista de marcações existentes
+     * @param sociosIndividual lista de sócios individuais
+     * @param sociosEmpresa lista de sócios empresa
+     * @param aulasGrupo lista de aulas de grupo
+     * @param sessoesPersonalTrainer lista de sessões de Personal Training
+     * @return nova marcação, ou null se a operação for cancelada
+     */
+    static Marcacao criar_marcacao(
+            Scanner scan,
+            ArrayList<Marcacao> marcacoes,
+            ArrayList<SocioIndividual> sociosIndividual,
+            ArrayList<SocioEmpresa> sociosEmpresa,
+            ArrayList<AulaGrupo> aulasGrupo,
+            ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
 
         // Selecionar sócio
         System.out.println("Escolha um sócio");
 
         Socio socio = selecionarSocio(
-                scan, sociosIndividual, sociosEmpresa
-        );
+                scan, sociosIndividual, sociosEmpresa);
 
         // Verificar se foi selecionado um sócio
         if (socio == null) {
@@ -536,14 +731,17 @@ class Main{
             System.out.println("Escolha uma atividade");
 
             atividade = selecionarAtividade(
-                    scan, aulasGrupo, sessoesPersonalTrainer
-            );
+                    scan, aulasGrupo, sessoesPersonalTrainer);
 
             if (atividade == null) {
                 return null;
             }
 
-            boolean semSobreposicao = verificarSobrePosicoes(socio, marcacoes, atividade.getDate(), atividade.getDuracao());
+            boolean semSobreposicao = verificarSobrePosicoes(
+                    socio,
+                    marcacoes,
+                    atividade.getDate(),
+                    atividade.getDuracao());
 
             if (semSobreposicao) {
                 break;
@@ -555,28 +753,54 @@ class Main{
         return new Marcacao(socio, atividade);
     }
 
+    /**
+     * Mostra todas as marcações existentes.
+     *
+     * @param marcacoes lista de marcações registadas
+     */
     static void listar_marcacao(ArrayList<Marcacao> marcacoes) {
-
-        if(marcacoes.isEmpty()) {
+        if (marcacoes.isEmpty()) {
             System.err.println("Não Existe Marcações");
             return;
-        };
+        }
 
-        for (int i = 0; i < marcacoes.size(); i++){
-            if(marcacoes.get(i) == null)continue;
+        for (int i = 0; i < marcacoes.size(); i++) {
+            if (marcacoes.get(i) == null) {
+                continue;
+            }
+
             System.out.print(marcacoes.get(i).showData());
         }
     }
 
-    static void resumir_ativadade(ArrayList<SocioIndividual> sociosIndividual, ArrayList<SocioEmpresa> socioEmpresas, ArrayList<AulaGrupo> aulasGrupo, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
+    /**
+     * Apresenta o número de sócios e atividades registados.
+     *
+     * @param sociosIndividual lista de sócios individuais
+     * @param socioEmpresas lista de sócios empresa
+     * @param aulasGrupo lista de aulas de grupo
+     * @param sessoesPersonalTrainer lista de sessões de Personal Training
+     */
+    static void resumir_ativadade(
+            ArrayList<SocioIndividual> sociosIndividual,
+            ArrayList<SocioEmpresa> socioEmpresas,
+            ArrayList<AulaGrupo> aulasGrupo,
+            ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
+
         System.out.println("\nSócios Individuais: " + sociosIndividual.size());
         System.out.println("Sócios Empresa: " + socioEmpresas.size());
         System.out.println("Aulas de Grupo: " + aulasGrupo.size());
-        System.out.println("Sessões de Personal Training: " + sessoesPersonalTrainer.size() + '\n');
+        System.out.println(
+                "Sessões de Personal Training: "
+                        + sessoesPersonalTrainer.size() + '\n');
     }
 
+    /**
+     * Identifica e apresenta a atividade com mais marcações.
+     *
+     * @param marcacoes lista de marcações registadas
+     */
     static void listar_atividade_popular(ArrayList<Marcacao> marcacoes) {
-
         if (marcacoes.isEmpty()) {
             System.err.println("\nNão existem marcações registadas.\n");
             return;
@@ -586,14 +810,17 @@ class Main{
         int maximo = 0;
 
         for (Marcacao marcacao : marcacoes) {
+            if (marcacao == null) {
+                continue;
+            }
 
-            if(marcacao == null) continue;
             Atividade atividade = marcacao.getAtividade();
             int contagem = 0;
 
             for (Marcacao outra : marcacoes) {
-
-                if(outra == null) continue;
+                if (outra == null) {
+                    continue;
+                }
 
                 if (outra.getAtividade().equals(atividade)) {
                     contagem++;
@@ -606,43 +833,47 @@ class Main{
             }
         }
 
-        if(maisPopular != null) {
-            System.out.println("\n\nAtividade mais popular: " + maisPopular.getNome());
+        if (maisPopular != null) {
+            System.out.println(
+                    "\n\nAtividade mais popular: " + maisPopular.getNome());
             System.out.println("Número de marcações: " + maximo + "\n\n");
         }
-
     }
 
-    static void mostrar_valor_socio(Scanner scan, ArrayList<Marcacao> marcacoes){
+    /**
+     * Calcula quanto um sócio gastou e poupou no total das suas marcações.
+     *
+     * @param scan leitor de dados introduzidos pelo utilizador
+     * @param marcacoes lista de marcações registadas
+     */
+    static void mostrar_valor_socio(
+            Scanner scan, ArrayList<Marcacao> marcacoes) {
 
         int id = lerInteiro(scan, "Insira o ID do sócio", 0);
-
 
         double valorTotal = 0;
         double valorPoupado = 0;
 
-
-        if(id < idCount){
-
-
-            for(Marcacao marcacao : marcacoes){
-                if(marcacao.getSocio().id == id){
+        if (id < idCount) {
+            for (Marcacao marcacao : marcacoes) {
+                if (marcacao.getSocio().id == id) {
                     valorTotal += marcacao.getCustoFinal();
                     valorPoupado += marcacao.getValorPoupado();
                 }
             }
 
-            System.out.println("\nValor Gasto: " + valorTotal + "\nValor Poupado: " + valorPoupado + "\n");
-        }
-        else{
+            System.out.println(
+                    "\nValor Gasto: " + valorTotal
+                            + "\nValor Poupado: " + valorPoupado + "\n");
+        } else {
             System.err.println("\nID invalido\n");
         }
-
-
-
     }
 
-    public static void main(String[] args) {
+    /**
+     * Inicia o programa, prepara as listas e apresenta o menu principal.
+     **/
+    public static void main() {
 
         Scanner scan = new Scanner(System.in);
 
@@ -652,12 +883,11 @@ class Main{
         ArrayList<SocioIndividual> sociosIndividual = new ArrayList<>();
         ArrayList<Instrutor> instrutors = new ArrayList<>();
         ArrayList<AulaGrupo> aulasGrupo = new ArrayList<>();
-        ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer = new ArrayList<>();
+        ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer =
+                new ArrayList<>();
         ArrayList<Marcacao> marcacoes = new ArrayList<>();
 
-
-
-        //Main Loop
+        // Menu principal
         while (true) {
             System.out.println("1 - Registrar um novo sócio individual");
             System.out.println("2 - Registrar um novo sócio empresa");
@@ -678,56 +908,89 @@ class Main{
                 case 1:
                     sociosIndividual.add(registar_socio_individual(scan));
                     break;
+
                 case 2:
                     sociosEmpresa.add(registar_socio_empresa(scan));
                     break;
+
                 case 3:
                     instrutors.add(registar_instrutor(scan));
                     break;
+
                 case 4:
                     System.out.println("1 - Registrar aula de grupo");
                     System.out.println("2 - Registrar sessão personal trainer");
 
                     int c = lerInteiro(scan, "Escolha: ", 1);
-                    switch (c){
+
+                    switch (c) {
                         case 1:
-                            AulaGrupo a = registar_aula_de_grupo(scan, instrutors);
-                            if(a != null) aulasGrupo.add(a);
+                            AulaGrupo a = registar_aula_de_grupo(
+                                    scan, instrutors);
+                            if (a != null) {
+                                aulasGrupo.add(a);
+                            }
                             break;
+
                         case 2:
-                            SessaoPersonalTrainer s = registar_sessao_personal(scan, instrutors);
-                            if(s != null) sessoesPersonalTrainer.add(s);
+                            SessaoPersonalTrainer s =
+                                    registar_sessao_personal(scan, instrutors);
+                            if (s != null) {
+                                sessoesPersonalTrainer.add(s);
+                            }
                             break;
+
                         default:
                             break;
                     }
                     break;
+
                 case 5:
                     listar_socios(sociosEmpresa, sociosIndividual);
                     break;
+
                 case 6:
                     listar_ativadades(aulasGrupo, sessoesPersonalTrainer);
                     break;
-                case 7:
-                    Marcacao m = criar_marcacao(scan, marcacoes,sociosIndividual, sociosEmpresa, aulasGrupo, sessoesPersonalTrainer);
-                    if(m!=null)marcacoes.add(m);
 
+                case 7:
+                    Marcacao m = criar_marcacao(
+                            scan,
+                            marcacoes,
+                            sociosIndividual,
+                            sociosEmpresa,
+                            aulasGrupo,
+                            sessoesPersonalTrainer);
+
+                    if (m != null) {
+                        marcacoes.add(m);
+                    }
                     break;
+
                 case 8:
                     listar_marcacao(marcacoes);
                     break;
+
                 case 9:
-                    resumir_ativadade(sociosIndividual, sociosEmpresa, aulasGrupo, sessoesPersonalTrainer);
+                    resumir_ativadade(
+                            sociosIndividual,
+                            sociosEmpresa,
+                            aulasGrupo,
+                            sessoesPersonalTrainer);
                     break;
+
                 case 10:
                     listar_atividade_popular(marcacoes);
                     break;
+
                 case 11:
                     mostrar_valor_socio(scan, marcacoes);
                     break;
+
                 case 12:
                     scan.close();
                     return;
+
                 default:
                     System.out.println("Escolha Inválida");
             }
