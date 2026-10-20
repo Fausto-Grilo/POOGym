@@ -39,11 +39,18 @@ public class AulaGrupo extends Atividade {
      */
     public void showData() {
         System.out.println("Nome: " + nome);
-        System.out.println("Instrutor: " + instrutor.get_nome());
+        System.out.println("Instrutor: " + instrutor.getNome());
         System.out.println("Data: " + date.getDate());
         System.out.println("Duração: " + duracao);
         System.out.println("Modalidade: " + modalidadeEnum.name());
         System.out.println("\nPreço: " + custoBase + "\n");
     }
+
+    /**
+     * Devolve a capacidade máxima da Aula de Grupo
+     *
+     * @return capacidade máxima
+     */
+    public int getMaxCap(){return maxCap;}
 
 }

@@ -34,7 +34,7 @@ public class Instrutor {
      *
      * @return nome do instrutor
      */
-    public String get_nome() {
+    public String getNome() {
         return nome;
     }
 

@@ -58,7 +58,7 @@ public class Marcacao {
      * @return informação sobre o sócio, a atividade, a data,
      *         o custo final e o valor poupado
      */
-    public String showData() {
+    public String toString() {
         return "Sócio: " + socio.getNome()
                 + "\nAtividade: " + atividade.getNome()
                 + "\nData e Hora: " + atividade.getDate().getDate()

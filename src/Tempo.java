@@ -70,7 +70,7 @@ public class Tempo {
      *
      * @return total de minutos correspondentes à hora e aos minutos
      */
-    public int getMinutos() {
+    public int getMinutes() {
         return hora * 60 + minutos;
     }
 }

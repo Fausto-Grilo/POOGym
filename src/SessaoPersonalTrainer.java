@@ -32,7 +32,7 @@ public class SessaoPersonalTrainer extends Atividade {
      */
     public void showData() {
         System.out.println("Nome: " + nome);
-        System.out.println("Instrutor: " + instrutor.get_nome());
+        System.out.println("Instrutor: " + instrutor.getNome());
         System.out.println("Data: " + date.getDate());
         System.out.println("Duração: " + duracao);
         System.out.println("Nivel: " + nivelEnum.name());

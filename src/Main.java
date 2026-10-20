@@ -10,6 +10,8 @@ import java.util.Scanner;
  * @author Fausto Henriques
  * @author Rodrigo Correia
  */
+
+
 class Main {
 
     /** Contador utilizado para atribuir IDs aos sócios. */
@@ -26,7 +28,7 @@ class Main {
      * @param regex formato que o texto deve cumprir, ou null
      * @return texto introduzido pelo utilizador
      */
-    static String lerTexto(Scanner scan, String mensagem, String regex) {
+    static private String lerTexto(Scanner scan, String mensagem, String regex) {
         while (true) {
             System.out.println(mensagem);
 
@@ -56,7 +58,7 @@ class Main {
      * @param scan leitor de dados introduzidos pelo utilizador
      * @return NIF introduzido
      */
-    static String lerNIF(Scanner scan) {
+    static private String lerNIF(Scanner scan) {
         while (true) {
             System.out.println("Insira o NIF:");
 
@@ -79,7 +81,7 @@ class Main {
      * @param minimo valor mínimo permitido
      * @return número inteiro introduzido
      */
-    static int lerInteiro(Scanner scan, String mensagem, int minimo) {
+    static private int lerInteiro(Scanner scan, String mensagem, int minimo) {
         while (true) {
             System.out.println(mensagem);
 
@@ -108,7 +110,7 @@ class Main {
      * @param scan leitor de dados introduzidos pelo utilizador
      * @return data e hora introduzidas
      */
-    static Tempo lerData(Scanner scan) {
+    static private Tempo lerData(Scanner scan) {
         while (true) {
             System.out.println("Insira a data (YYYY-MM-DD HH:mm):");
 
@@ -150,8 +152,7 @@ class Main {
      * @param instrutores lista de instrutores registados
      * @return instrutor escolhido, ou null se não existirem instrutores
      */
-    static Instrutor selecionarInstrutor(
-            Scanner scan, ArrayList<Instrutor> instrutores) {
+    static private Instrutor selecionarInstrutor(Scanner scan, ArrayList<Instrutor> instrutores) {
 
         if (instrutores.isEmpty()) {
             System.err.println("Não existem instrutores registados.");
@@ -162,7 +163,7 @@ class Main {
             System.out.println("Lista de Instrutores:");
 
             for (int i = 0; i < instrutores.size(); i++) {
-                System.out.println(i + " - " + instrutores.get(i).get_nome());
+                System.out.println(i + " - " + instrutores.get(i).getNome());
             }
 
             int escolha = lerInteiro(scan, "Escolha um Instrutor:", 0);
@@ -182,8 +183,7 @@ class Main {
      * @param sociosIndividual lista de sócios individuais
      * @return sócio escolhido, ou null se a lista estiver vazia
      */
-    static SocioIndividual selecionarSocioIndividual(
-            Scanner scan, ArrayList<SocioIndividual> sociosIndividual) {
+    static private SocioIndividual selecionarSocioIndividual(Scanner scan, ArrayList<SocioIndividual> sociosIndividual) {
 
         if (sociosIndividual.isEmpty()) {
             System.err.println("Não existem socios individuais registados.");
@@ -216,8 +216,7 @@ class Main {
      * @param sociosEmpresa lista de sócios empresa
      * @return sócio escolhido, ou null se a lista estiver vazia
      */
-    static SocioEmpresa selecionarSocioEmpresa(
-            Scanner scan, ArrayList<SocioEmpresa> sociosEmpresa) {
+    static private SocioEmpresa selecionarSocioEmpresa(Scanner scan, ArrayList<SocioEmpresa> sociosEmpresa) {
 
         if (sociosEmpresa.isEmpty()) {
             System.err.println("Não existem socios empresa registados.");
@@ -251,10 +250,7 @@ class Main {
      * @param sociosEmpresa lista de sócios empresa
      * @return sócio escolhido, ou null se o utilizador voltar atrás
      */
-    static Socio selecionarSocio(
-            Scanner scan,
-            ArrayList<SocioIndividual> sociosIndividual,
-            ArrayList<SocioEmpresa> sociosEmpresa) {
+    static private Socio selecionarSocio(Scanner scan, ArrayList<SocioIndividual> sociosIndividual, ArrayList<SocioEmpresa> sociosEmpresa) {
 
         while (true) {
             System.out.println("1- Sócio Individual");
@@ -294,7 +290,7 @@ class Main {
      * @param scan leitor de dados introduzidos pelo utilizador
      * @return modalidade escolhida
      */
-    static ModalidadeEnum modalidadeEnum(Scanner scan) {
+    static private ModalidadeEnum modalidadeEnum(Scanner scan) {
         while (true) {
             System.out.println("Lista de Modalidades:");
 
@@ -318,7 +314,7 @@ class Main {
      * @param scan leitor de dados introduzidos pelo utilizador
      * @return nível escolhido
      */
-    static NivelEnum nivelEnum(Scanner scan) {
+    static private NivelEnum nivelEnum(Scanner scan) {
         while (true) {
             System.out.println("Lista de Niveis:");
 
@@ -343,8 +339,7 @@ class Main {
      * @param aulasGrupo lista de aulas de grupo registadas
      * @return aula escolhida, ou null se a lista estiver vazia
      */
-    static AulaGrupo selecionarAulaGrupo(
-            Scanner scan, ArrayList<AulaGrupo> aulasGrupo) {
+    static private AulaGrupo selecionarAulaGrupo(Scanner scan, ArrayList<AulaGrupo> aulasGrupo, ArrayList<Marcacao> marcacoes) {
 
         if (aulasGrupo.isEmpty()) {
             System.err.println("Não existem aulas de grupo registadas.");
@@ -363,10 +358,15 @@ class Main {
                     scan, "Escolha uma Aula de Grupo:", 0);
 
             if (escolha < aulasGrupo.size()) {
-                return aulasGrupo.get(escolha);
+                if(!isFull(marcacoes, aulasGrupo.get(escolha))){
+                    return aulasGrupo.get(escolha);
+                }else{
+                    System.err.println("Aula cheia, escolha outra");
+                    return null;
+                }
+            }else {
+                System.err.println("Escolha uma aula válida.");
             }
-
-            System.out.println("Escolha uma aula válida.");
         }
     }
 
@@ -377,9 +377,7 @@ class Main {
      * @param sessoesPersonalTrainer lista de sessões registadas
      * @return sessão escolhida, ou null se a lista estiver vazia
      */
-    static SessaoPersonalTrainer selecionarSessaoPersonalTrainer(
-            Scanner scan,
-            ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
+    static private SessaoPersonalTrainer selecionarSessaoPersonalTrainer(Scanner scan, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
 
         if (sessoesPersonalTrainer.isEmpty()) {
             System.err.println("Não existem sessões de PT registadas.");
@@ -413,10 +411,9 @@ class Main {
      * @param sessoesPersonalTrainer lista de sessões de Personal Training
      * @return atividade escolhida, ou null se o utilizador voltar atrás
      */
-    static Atividade selecionarAtividade(
-            Scanner scan,
-            ArrayList<AulaGrupo> aulasGrupo,
-            ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
+
+
+    static private Atividade selecionarAtividade(Scanner scan, ArrayList<AulaGrupo> aulasGrupo, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer, ArrayList<Marcacao> marcacoes) {
 
         while (true) {
             System.out.println("1- Aula de Grupo");
@@ -427,7 +424,7 @@ class Main {
 
             switch (choice) {
                 case 1:
-                    Atividade aG = selecionarAulaGrupo(scan, aulasGrupo);
+                    Atividade aG = selecionarAulaGrupo(scan, aulasGrupo, marcacoes);
                     if (aG != null) {
                         return aG;
                     }
@@ -460,11 +457,7 @@ class Main {
      * @param duracao duração da nova atividade em minutos
      * @return true se não existir sobreposição, false caso contrário
      */
-    static boolean verificarSobrePosicoes(
-            Socio socio,
-            ArrayList<Marcacao> marcacoes,
-            Tempo tempo,
-            int duracao) {
+    static private boolean verificarSobrePosicoes(Socio socio, ArrayList<Marcacao> marcacoes, Tempo tempo, int duracao) {
 
         for (Marcacao marcacao : marcacoes) {
             if (marcacao.getSocio().equals(socio)) {
@@ -473,12 +466,12 @@ class Main {
 
                 if (dataExistente.getSimpleDate().equals(tempo.getSimpleDate())) {
 
-                    int inicioExistente = dataExistente.getMinutos();
+                    int inicioExistente = dataExistente.getMinutes();
 
                     int fimExistente = inicioExistente
                             + marcacao.getAtividade().getDuracao();
 
-                    int inicioNovo = tempo.getMinutos();
+                    int inicioNovo = tempo.getMinutes();
                     int fimNovo = inicioNovo + duracao;
 
                     if (inicioNovo < fimExistente && fimNovo > inicioExistente) {
@@ -492,6 +485,26 @@ class Main {
         return true;
     }
 
+    /**
+     * Verifica se a aula já está cheia
+     *
+     * @param marcacoes lista de marcações existentes
+     * @param aulaGrupo aula que queremos verificar
+     * @return true se estiver cheia, false ainda houver vagas
+     */
+    static private boolean isFull(ArrayList<Marcacao> marcacoes, AulaGrupo aulaGrupo){
+
+        int totalMarcacoes = 0;
+
+        for(Marcacao marcacao: marcacoes){
+            if(marcacao.getAtividade() == aulaGrupo){
+                totalMarcacoes++;
+            }
+        }
+
+        return totalMarcacoes >= aulaGrupo.getMaxCap();
+    }
+
     // Registos
 
     /**
@@ -500,7 +513,7 @@ class Main {
      * @param scan leitor de dados introduzidos pelo utilizador
      * @return novo sócio individual
      */
-    static SocioIndividual registar_socio_individual(Scanner scan) {
+    static private SocioIndividual registar_socio_individual(Scanner scan) {
         // Recolher dados
         String nome = lerTexto(scan, "Insira o nome: ", null);
 
@@ -525,7 +538,7 @@ class Main {
      * @param scan leitor de dados introduzidos pelo utilizador
      * @return novo sócio empresa
      */
-    static SocioEmpresa registar_socio_empresa(Scanner scan) {
+    static private SocioEmpresa registar_socio_empresa(Scanner scan) {
         // Recolher dados
         String nome = lerTexto(scan, "Insira o nome: ", null);
 
@@ -549,7 +562,7 @@ class Main {
      * @param scan leitor de dados introduzidos pelo utilizador
      * @return novo instrutor
      */
-    static Instrutor registar_instrutor(Scanner scan) {
+    static private Instrutor registar_instrutor(Scanner scan) {
         // Receber dados
         String nome = lerTexto(scan, "Insira o Nome:", null);
 
@@ -568,8 +581,7 @@ class Main {
      * @param instrutores lista de instrutores disponíveis
      * @return nova aula de grupo, ou null se não for escolhido um instrutor
      */
-    static AulaGrupo registar_aula_de_grupo(
-            Scanner scan, ArrayList<Instrutor> instrutores) {
+    static private AulaGrupo registar_aula_de_grupo(Scanner scan, ArrayList<Instrutor> instrutores) {
 
         String nome = lerTexto(scan, "Insira o nome da Aula:", null);
 
@@ -603,8 +615,7 @@ class Main {
      * @param instrutores lista de instrutores disponíveis
      * @return nova sessão, ou null se não for escolhido um instrutor
      */
-    static SessaoPersonalTrainer registar_sessao_personal(
-            Scanner scan, ArrayList<Instrutor> instrutores) {
+    static private SessaoPersonalTrainer registar_sessao_personal(Scanner scan, ArrayList<Instrutor> instrutores) {
 
         String nome = lerTexto(scan, "Insira o nome da Sessão:", null);
 
@@ -634,9 +645,7 @@ class Main {
      * @param sociosEmpresa lista de sócios empresa
      * @param socioIndividuals lista de sócios individuais
      */
-    static void listar_socios(
-            ArrayList<SocioEmpresa> sociosEmpresa,
-            ArrayList<SocioIndividual> socioIndividuals) {
+    static private void listar_socios(ArrayList<SocioEmpresa> sociosEmpresa, ArrayList<SocioIndividual> socioIndividuals) {
 
         if (socioIndividuals.isEmpty() && sociosEmpresa.isEmpty()) {
             System.err.println("Não existem sócios registados");
@@ -666,9 +675,7 @@ class Main {
      * @param aulasGrupo lista de aulas de grupo
      * @param sessoesPersonalTrainer lista de sessões de Personal Training
      */
-    static void listar_ativadades(
-            ArrayList<AulaGrupo> aulasGrupo,
-            ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
+    static private void listar_ativadades(ArrayList<AulaGrupo> aulasGrupo, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
 
         if (aulasGrupo.isEmpty() && sessoesPersonalTrainer.isEmpty()) {
             System.err.println("Não Existe Atividades Registadas");
@@ -704,13 +711,7 @@ class Main {
      * @param sessoesPersonalTrainer lista de sessões de Personal Training
      * @return nova marcação, ou null se a operação for cancelada
      */
-    static Marcacao criar_marcacao(
-            Scanner scan,
-            ArrayList<Marcacao> marcacoes,
-            ArrayList<SocioIndividual> sociosIndividual,
-            ArrayList<SocioEmpresa> sociosEmpresa,
-            ArrayList<AulaGrupo> aulasGrupo,
-            ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
+    static private Marcacao criar_marcacao(Scanner scan, ArrayList<Marcacao> marcacoes, ArrayList<SocioIndividual> sociosIndividual, ArrayList<SocioEmpresa> sociosEmpresa, ArrayList<AulaGrupo> aulasGrupo, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
 
         // Selecionar sócio
         System.out.println("Escolha um sócio");
@@ -730,22 +731,22 @@ class Main {
         while (true) {
             System.out.println("Escolha uma atividade");
 
-            atividade = selecionarAtividade(
-                    scan, aulasGrupo, sessoesPersonalTrainer);
+            atividade = selecionarAtividade(scan, aulasGrupo, sessoesPersonalTrainer, marcacoes);
 
             if (atividade == null) {
                 return null;
             }
 
-            boolean semSobreposicao = verificarSobrePosicoes(
-                    socio,
-                    marcacoes,
-                    atividade.getDate(),
-                    atividade.getDuracao());
+            boolean semSobreposicao = verificarSobrePosicoes(socio, marcacoes, atividade.getDate(), atividade.getDuracao());
+
+
+
+
 
             if (semSobreposicao) {
                 break;
             }
+
 
             System.err.println("Escolha outra atividade ou horário.");
         }
@@ -758,7 +759,7 @@ class Main {
      *
      * @param marcacoes lista de marcações registadas
      */
-    static void listar_marcacao(ArrayList<Marcacao> marcacoes) {
+    static private void listar_marcacao(ArrayList<Marcacao> marcacoes) {
         if (marcacoes.isEmpty()) {
             System.err.println("Não Existe Marcações");
             return;
@@ -769,7 +770,7 @@ class Main {
                 continue;
             }
 
-            System.out.print(marcacoes.get(i).showData());
+            System.out.print(marcacoes.get(i).toString());
         }
     }
 
@@ -781,11 +782,7 @@ class Main {
      * @param aulasGrupo lista de aulas de grupo
      * @param sessoesPersonalTrainer lista de sessões de Personal Training
      */
-    static void resumir_ativadade(
-            ArrayList<SocioIndividual> sociosIndividual,
-            ArrayList<SocioEmpresa> socioEmpresas,
-            ArrayList<AulaGrupo> aulasGrupo,
-            ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
+    static private void resumir_ativadade(ArrayList<SocioIndividual> sociosIndividual, ArrayList<SocioEmpresa> socioEmpresas, ArrayList<AulaGrupo> aulasGrupo, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
 
         System.out.println("\nSócios Individuais: " + sociosIndividual.size());
         System.out.println("Sócios Empresa: " + socioEmpresas.size());
@@ -800,7 +797,7 @@ class Main {
      *
      * @param marcacoes lista de marcações registadas
      */
-    static void listar_atividade_popular(ArrayList<Marcacao> marcacoes) {
+    static private void listar_atividade_popular(ArrayList<Marcacao> marcacoes) {
         if (marcacoes.isEmpty()) {
             System.err.println("\nNão existem marcações registadas.\n");
             return;
@@ -846,8 +843,7 @@ class Main {
      * @param scan leitor de dados introduzidos pelo utilizador
      * @param marcacoes lista de marcações registadas
      */
-    static void mostrar_valor_socio(
-            Scanner scan, ArrayList<Marcacao> marcacoes) {
+    static private void mostrar_valor_socio(Scanner scan, ArrayList<Marcacao> marcacoes) {
 
         int id = lerInteiro(scan, "Insira o ID do sócio", 0);
 
@@ -873,7 +869,7 @@ class Main {
     /**
      * Inicia o programa, prepara as listas e apresenta o menu principal.
      **/
-    public static void main() {
+    static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
 

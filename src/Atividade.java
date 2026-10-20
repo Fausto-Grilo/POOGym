@@ -77,4 +77,5 @@ public class Atividade {
     public int getDuracao() {
         return duracao;
     }
+
 }
