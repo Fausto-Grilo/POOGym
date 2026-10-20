@@ -25,7 +25,7 @@ public class SocioIndividual extends Socio {
         this.anoNascimento = anoNascimento;
     }
 
-    // Método
+    // Metodo
 
     /**
      * Calcula o desconto do sócio com base na sua idade.
@@ -53,5 +53,6 @@ public class SocioIndividual extends Socio {
         System.out.println("Email: " + email);
         System.out.println("Desconto: " + desconto + "\n");
     }
+
 
 }

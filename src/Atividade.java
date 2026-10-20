@@ -19,7 +19,7 @@ public class Atividade {
     protected int duracao;
 
     /** Preço da atividade. */
-    protected double preco;
+    protected double custoBase;
 
     // Construtor
 
@@ -30,14 +30,17 @@ public class Atividade {
      * @param instrutor instrutor responsável pela atividade
      * @param date data e hora da atividade
      * @param duracao duração da atividade em minutos
-     * @param preco preço da atividade (€)
+     * @param custoBase preço da atividade (€)
      */
-    public Atividade(String nome, Instrutor instrutor, Tempo date, int duracao, double preco) {
+    public Atividade(String nome, Instrutor instrutor, Tempo date, int duracao, double custoBase) {
         this.nome = nome;
         this.instrutor = instrutor;
         this.date = date;
         this.duracao = duracao;
-        this.preco = preco;
+        this.custoBase = custoBase;
     }
 
+    public double getCustoBase(){ return custoBase;}
+    public String getNome(){return nome;}
+    public Tempo getDate(){return date;}
 }

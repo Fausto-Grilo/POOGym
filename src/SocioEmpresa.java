@@ -20,7 +20,7 @@ public class SocioEmpresa extends Socio {
      * @param nif número de identificação fiscal da empresa
      */
     public SocioEmpresa(String nome, int id, String email, String nif) {
-        super(nome, id, email, 20);
+        super(nome, id, email, 0.2);
         this.nif = nif;
     }
 
@@ -34,5 +34,6 @@ public class SocioEmpresa extends Socio {
         System.out.println("Email: " + email);
         System.out.println("Desconto: " + desconto + "\n");
     }
+
 
 }

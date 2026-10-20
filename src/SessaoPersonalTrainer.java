@@ -36,7 +36,7 @@ public class SessaoPersonalTrainer extends Atividade {
         System.out.println("Data: " + date.getDate());
         System.out.println("Duração: " + duracao);
         System.out.println("Nivel: " + nivelEnum.name());
-        System.out.println("\nPreço: " + preco + "\n");
+        System.out.println("\nPreço: " + custoBase + "\n");
     }
 
 }

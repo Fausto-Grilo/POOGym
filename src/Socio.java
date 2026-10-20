@@ -33,4 +33,13 @@ public class Socio {
         this.email = email;
         this.desconto = desconto;
     }
+
+
+    public String getNome() {
+        return nome;
+    }
+    public double getDesconto(){return desconto;}
+
+
+
 }
