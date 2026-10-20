@@ -6,21 +6,29 @@ import java.util.Scanner;
 
 class Main{
 
-
     static int idCount = 0;
 
     //Lógica
-    static String lerTexto(Scanner scan, String mensagem) {
+    static String lerTexto(Scanner scan, String mensagem, String regex) {
         while (true) {
             System.out.println(mensagem);
 
             String texto = scan.nextLine().trim();
 
             if (!texto.isEmpty()) {
-                return texto;
-            }
 
-            System.out.println("O texto não pode estar vazio. Tente novamente.");
+                if(regex == null){
+                    return texto;
+                }
+
+                if(texto.matches(regex)){
+                    return texto;
+                }else {
+                    System.out.println("O texto não está no formato correto. Tente novamente.");
+                }
+            }else {
+                System.out.println("O texto não pode estar vazio. Tente novamente.");
+            }
         }
     }
 
@@ -324,8 +332,33 @@ class Main{
     }
 
 
-    static boolean verificarSobrePosicoes(Socio socio, ArrayList<Marcacao> marcacaos){
-        //todo addVerification to Marcacoes e Criacao de Atividades
+    static boolean verificarSobrePosicoes(Socio socio, ArrayList<Marcacao> marcacoes, Tempo tempo, int duracao){
+
+        for (Marcacao marcacao : marcacoes) {
+
+            if (marcacao.getSocio().equals(socio)) {
+
+                Tempo dataExistente = marcacao.getAtividade().getDate();
+
+                if (dataExistente.getSimpleDate().equals(tempo.getSimpleDate())) {
+
+                    int inicioExistente = dataExistente.getMinutos();
+
+                    int fimExistente = inicioExistente
+                            + marcacao.getAtividade().getDuracao();
+
+                    int inicioNovo = tempo.getMinutos();
+                    int fimNovo = inicioNovo + duracao;
+
+                    if (inicioNovo < fimExistente && fimNovo > inicioExistente) {
+
+                        System.err.println("\nSobreposição de atividades.\n");
+
+                        return false;
+                    }
+                }
+            }
+        }
 
         return true;
     }
@@ -335,14 +368,14 @@ class Main{
 
     static SocioIndividual registar_socio_individual(Scanner scan) {
         //Recolher Dados
-        String nome = lerTexto(scan, "Insira o nome: ");
+        String nome = lerTexto(scan, "Insira o nome: ", null);
 
         int id = idCount;
         idCount += 1;
 
 
 
-        String email = lerTexto(scan, "Insira o email: ");
+        String email = lerTexto(scan, "Insira o email (ex: nome@gmail.com): ", "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
 
         int anoNascimento = lerInteiro(scan, "Insira o ano de nascimento: ", 1900);
 
@@ -352,7 +385,7 @@ class Main{
 
     static SocioEmpresa registar_socio_empresa(Scanner scan) {
         //Recolher Dados
-        String nome = lerTexto(scan, "Insira o nome: ");
+        String nome = lerTexto(scan, "Insira o nome: ", null);
 
         int id = idCount;
         idCount += 1;
@@ -360,7 +393,7 @@ class Main{
 
         String nif = lerNIF(scan);
 
-        String email = lerTexto(scan, "Insira o email: ");
+        String email = lerTexto(scan, "Insira o email: ", null);
 
         int anoNascimento = lerInteiro(scan, "Insira o ano de nascimento: ", 1900);
 
@@ -372,11 +405,11 @@ class Main{
 
 
         // Receber dados
-        String nome = lerTexto(scan, "Insira o Nome:");
+        String nome = lerTexto(scan, "Insira o Nome:", null);
 
-        String genero = lerTexto(scan, "Insira o Género");
+        String genero = lerTexto(scan, "Insira o Género", null);
 
-        String formacao = lerTexto(scan, "Insira a Formação:");
+        String formacao = lerTexto(scan, "Insira a Formação:", null);
 
         //Criar objeto instrutor
         return new Instrutor(nome, genero, formacao);
@@ -384,7 +417,7 @@ class Main{
 
     static AulaGrupo registar_aula_de_grupo(Scanner scan, ArrayList<Instrutor> instrutores) {
 
-        String nome = lerTexto(scan, "Insira o nome da Aula:");
+        String nome = lerTexto(scan, "Insira o nome da Aula:", null);
 
         Tempo data = lerData(scan);
 
@@ -410,7 +443,7 @@ class Main{
 
     static SessaoPersonalTrainer registar_sessao_personal(Scanner scan, ArrayList<Instrutor> instrutores) {
 
-        String nome = lerTexto(scan, "Insira o nome da Sessão:");
+        String nome = lerTexto(scan, "Insira o nome da Sessão:", null);
 
         Tempo data = lerData(scan);
 
@@ -483,20 +516,43 @@ class Main{
 
     static Marcacao criar_marcacao(Scanner scan, ArrayList<Marcacao> marcacoes, ArrayList<SocioIndividual> sociosIndividual, ArrayList<SocioEmpresa> sociosEmpresa, ArrayList<AulaGrupo> aulasGrupo, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
 
+        // Selecionar sócio
         System.out.println("Escolha um sócio");
-        Socio socio = selecionarSocio(scan, sociosIndividual, sociosEmpresa);
 
-        Atividade atividade = new Atividade(null,null,null,0,0);
+        Socio socio = selecionarSocio(
+                scan, sociosIndividual, sociosEmpresa
+        );
 
-        do {
-            System.out.println("Escolha uma sessão");
-            atividade = selecionarAtividade(scan, aulasGrupo, sessoesPersonalTrainer);
-            if(atividade == null) return null;
-        }while (!verificarSobrePosicoes(socio, marcacoes));
+        // Verificar se foi selecionado um sócio
+        if (socio == null) {
+            System.err.println("Erro: nenhum sócio selecionado.");
+            return null;
+        }
 
+        // Selecionar atividade e verificar sobreposições
+        Atividade atividade;
 
+        while (true) {
+            System.out.println("Escolha uma atividade");
 
-        return new Marcacao(socio,atividade);
+            atividade = selecionarAtividade(
+                    scan, aulasGrupo, sessoesPersonalTrainer
+            );
+
+            if (atividade == null) {
+                return null;
+            }
+
+            boolean semSobreposicao = verificarSobrePosicoes(socio, marcacoes, atividade.getDate(), atividade.getDuracao());
+
+            if (semSobreposicao) {
+                break;
+            }
+
+            System.err.println("Escolha outra atividade ou horário.");
+        }
+
+        return new Marcacao(socio, atividade);
     }
 
     static void listar_marcacao(ArrayList<Marcacao> marcacoes) {

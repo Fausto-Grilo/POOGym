@@ -43,4 +43,5 @@ public class Atividade {
     public double getCustoBase(){ return custoBase;}
     public String getNome(){return nome;}
     public Tempo getDate(){return date;}
+    public int getDuracao(){return  duracao;}
 }

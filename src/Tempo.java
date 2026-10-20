@@ -50,4 +50,9 @@ public class Tempo {
     public String getDate() {
         return ano + "-" + mes + "-" + dia + " " + hora + ":" + minutos;
     }
+
+    public String getSimpleDate(){return ano + "-" + mes + "-" + dia;}
+    public String getHourAndMinutes(){return  hora+ ":" + minutos;}
+
+    public int getMinutos(){return hora*60 + minutos;}
 }
