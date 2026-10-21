@@ -497,15 +497,16 @@ class Main {
      * da atividade escolhida.
      *
      * @param instrutor sócio que pretende fazer a marcação
-     * @param atividades lista de atividades existentes
+     * @param aulasGrupo lista de aulas de grupo existentes
+     * @param sessoesPersonalTrainer lista de sessões de PT existentes
      * @param tempo data e hora da nova atividade
      * @param duracao duração da nova atividade em minutos
      * @return true se não existir sobreposição, false caso contrário
      */
-    static private boolean verificarSobrePosicoesInstrutor(Instrutor instrutor, ArrayList<AulaGrupo> aulaGrupos, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer, Tempo tempo, int duracao) {
+    static private boolean verificarSobrePosicoesInstrutor(Instrutor instrutor, ArrayList<AulaGrupo> aulasGrupo, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer, Tempo tempo, int duracao) {
 
         ArrayList<Atividade> atividades = new ArrayList<>();
-        atividades.addAll(aulaGrupos);
+        atividades.addAll(aulasGrupo);
         atividades.addAll(sessoesPersonalTrainer);
 
         for (Atividade atividade : atividades) {
@@ -648,6 +649,8 @@ class Main {
      *
      * @param scan leitor de dados introduzidos pelo utilizador
      * @param instrutores lista de instrutores disponíveis
+     * @param aulasGrupo lista de aulas de grupo existentes
+     * @param sessoesPersonalTrainer lista de sessões de PT existentes
      * @return nova aula de grupo, ou null se não for escolhido um instrutor, ou se o instrutor escolhido não estiver disponivel
      */
     static private AulaGrupo registar_aula_de_grupo(Scanner scan, ArrayList<Instrutor> instrutores, ArrayList<AulaGrupo> aulasGrupo, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
@@ -689,6 +692,8 @@ class Main {
      *
      * @param scan leitor de dados introduzidos pelo utilizador
      * @param instrutores lista de instrutores disponíveis
+     * @param aulasGrupo lista de aulas de grupo existentes
+     * @param sessoesPersonalTrainer lista de sessões de PT existentes
      * @return nova sessão, ou null se não for escolhido um instrutor, ou se o instrutor escolhido não estiver disponivel
      */
     static private SessaoPersonalTrainer registar_sessao_personal(Scanner scan, ArrayList<Instrutor> instrutores, ArrayList<AulaGrupo> aulasGrupo, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
