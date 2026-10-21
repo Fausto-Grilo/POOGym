@@ -358,7 +358,7 @@ class Main {
                     scan, "Escolha uma Aula de Grupo:", 0);
 
             if (escolha < aulasGrupo.size()) {
-                if(!isFull(marcacoes, aulasGrupo.get(escolha))){
+                if(!isAGFull(marcacoes, aulasGrupo.get(escolha))){
                     return aulasGrupo.get(escolha);
                 }else{
                     System.err.println("Aula cheia, escolha outra");
@@ -377,7 +377,7 @@ class Main {
      * @param sessoesPersonalTrainer lista de sessões registadas
      * @return sessão escolhida, ou null se a lista estiver vazia
      */
-    static private SessaoPersonalTrainer selecionarSessaoPersonalTrainer(Scanner scan, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
+    static private SessaoPersonalTrainer selecionarSessaoPersonalTrainer(Scanner scan, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer, ArrayList<Marcacao> marcacoes) {
 
         if (sessoesPersonalTrainer.isEmpty()) {
             System.err.println("Não existem sessões de PT registadas.");
@@ -396,7 +396,14 @@ class Main {
                     scan, "Escolha uma Sessão de Personal Training:", 0);
 
             if (escolha < sessoesPersonalTrainer.size()) {
-                return sessoesPersonalTrainer.get(escolha);
+                if(!isSPTFull(marcacoes, sessoesPersonalTrainer.get(escolha))){
+                    return sessoesPersonalTrainer.get(escolha);
+                }else{
+                    System.err.println("Sessão cheia, escolha outra");
+                    return null;
+                }
+            }else {
+                System.err.println("Escolha uma sessão válida.");
             }
 
             System.out.println("Escolha uma sessão válida.");
@@ -432,7 +439,7 @@ class Main {
 
                 case 2:
                     Atividade sPT = selecionarSessaoPersonalTrainer(
-                            scan, sessoesPersonalTrainer);
+                            scan, sessoesPersonalTrainer, marcacoes);
                     if (sPT != null) {
                         return sPT;
                     }
@@ -486,13 +493,56 @@ class Main {
     }
 
     /**
+     * Verifica se o instrutor já tem uma atividade que coincide com o horário
+     * da atividade escolhida.
+     *
+     * @param instrutor sócio que pretende fazer a marcação
+     * @param atividades lista de atividades existentes
+     * @param tempo data e hora da nova atividade
+     * @param duracao duração da nova atividade em minutos
+     * @return true se não existir sobreposição, false caso contrário
+     */
+    static private boolean verificarSobrePosicoesInstrutor(Instrutor instrutor, ArrayList<AulaGrupo> aulaGrupos, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer, Tempo tempo, int duracao) {
+
+        ArrayList<Atividade> atividades = new ArrayList<>();
+        atividades.addAll(aulaGrupos);
+        atividades.addAll(sessoesPersonalTrainer);
+
+        for (Atividade atividade : atividades) {
+            if (atividade.getInstrutor().equals(instrutor)) {
+
+                Tempo dataExistente = atividade.getDate();
+
+                //Se no mesmo dia
+                if (dataExistente.getSimpleDate().equals(tempo.getSimpleDate())) {
+
+                    int inicioExistente = dataExistente.getMinutes();
+
+                    int fimExistente = inicioExistente
+                            + atividade.getDuracao();
+
+                    int inicioNovo = tempo.getMinutes();
+                    int fimNovo = inicioNovo + duracao;
+
+                    if (inicioNovo < fimExistente && fimNovo > inicioExistente) {
+                        System.err.println("\nSobreposição de atividades.\n");
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Verifica se a aula já está cheia
      *
      * @param marcacoes lista de marcações existentes
      * @param aulaGrupo aula que queremos verificar
      * @return true se estiver cheia, false ainda houver vagas
      */
-    static private boolean isFull(ArrayList<Marcacao> marcacoes, AulaGrupo aulaGrupo){
+    static private boolean isAGFull(ArrayList<Marcacao> marcacoes, AulaGrupo aulaGrupo){
 
         int totalMarcacoes = 0;
 
@@ -503,6 +553,25 @@ class Main {
         }
 
         return totalMarcacoes >= aulaGrupo.getMaxCap();
+    }
+
+
+    /**
+     * Verifica se a sessão de PT já está cheia
+     *
+     * @param marcacoes lista de marcações existentes
+     * @param sessaoPersonalTrainer sessão que queremos verificar
+     * @return true se estiver cheia, false ainda houver vaga
+     */
+    static private boolean isSPTFull(ArrayList<Marcacao> marcacoes, SessaoPersonalTrainer sessaoPersonalTrainer){
+
+        for(Marcacao marcacao: marcacoes){
+            if(marcacao.getAtividade() == sessaoPersonalTrainer){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // Registos
@@ -579,9 +648,9 @@ class Main {
      *
      * @param scan leitor de dados introduzidos pelo utilizador
      * @param instrutores lista de instrutores disponíveis
-     * @return nova aula de grupo, ou null se não for escolhido um instrutor
+     * @return nova aula de grupo, ou null se não for escolhido um instrutor, ou se o instrutor escolhido não estiver disponivel
      */
-    static private AulaGrupo registar_aula_de_grupo(Scanner scan, ArrayList<Instrutor> instrutores) {
+    static private AulaGrupo registar_aula_de_grupo(Scanner scan, ArrayList<Instrutor> instrutores, ArrayList<AulaGrupo> aulasGrupo, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
 
         String nome = lerTexto(scan, "Insira o nome da Aula:", null);
 
@@ -599,6 +668,13 @@ class Main {
             return null;
         }
 
+        if (!verificarSobrePosicoesInstrutor(instrutor, aulasGrupo, sessoesPersonalTrainer, data, duracao)){
+            System.err.println("Escolha outro instrutor.");
+            return null;
+        }
+
+
+
         ModalidadeEnum modalidade = modalidadeEnum(scan);
 
         int maxCap = lerInteiro(
@@ -613,9 +689,9 @@ class Main {
      *
      * @param scan leitor de dados introduzidos pelo utilizador
      * @param instrutores lista de instrutores disponíveis
-     * @return nova sessão, ou null se não for escolhido um instrutor
+     * @return nova sessão, ou null se não for escolhido um instrutor, ou se o instrutor escolhido não estiver disponivel
      */
-    static private SessaoPersonalTrainer registar_sessao_personal(Scanner scan, ArrayList<Instrutor> instrutores) {
+    static private SessaoPersonalTrainer registar_sessao_personal(Scanner scan, ArrayList<Instrutor> instrutores, ArrayList<AulaGrupo> aulasGrupo, ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer) {
 
         String nome = lerTexto(scan, "Insira o nome da Sessão:", null);
 
@@ -630,6 +706,11 @@ class Main {
         Instrutor instrutor = selecionarInstrutor(scan, instrutores);
 
         if (instrutor == null) {
+            return null;
+        }
+
+        if (!verificarSobrePosicoesInstrutor(instrutor, aulasGrupo, sessoesPersonalTrainer, data, duracao)){
+            System.err.println("Escolha outro instrutor.");
             return null;
         }
 
@@ -879,8 +960,7 @@ class Main {
         ArrayList<SocioIndividual> sociosIndividual = new ArrayList<>();
         ArrayList<Instrutor> instrutors = new ArrayList<>();
         ArrayList<AulaGrupo> aulasGrupo = new ArrayList<>();
-        ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer =
-                new ArrayList<>();
+        ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer = new ArrayList<>();
         ArrayList<Marcacao> marcacoes = new ArrayList<>();
 
         // Menu principal
@@ -922,7 +1002,7 @@ class Main {
                     switch (c) {
                         case 1:
                             AulaGrupo a = registar_aula_de_grupo(
-                                    scan, instrutors);
+                                    scan, instrutors, aulasGrupo, sessoesPersonalTrainer);
                             if (a != null) {
                                 aulasGrupo.add(a);
                             }
@@ -930,7 +1010,7 @@ class Main {
 
                         case 2:
                             SessaoPersonalTrainer s =
-                                    registar_sessao_personal(scan, instrutors);
+                                    registar_sessao_personal(scan, instrutors, aulasGrupo, sessoesPersonalTrainer);
                             if (s != null) {
                                 sessoesPersonalTrainer.add(s);
                             }
@@ -992,4 +1072,10 @@ class Main {
             }
         }
     }
+
+    // Duvidas a tirar
+    // 1. separação de logica do Main
+    // 2. exclarecer a função listar_atividade_popular
+
 }
+

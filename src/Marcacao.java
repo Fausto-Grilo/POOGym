@@ -102,4 +102,5 @@ public class Marcacao {
     public Socio getSocio() {
         return socio;
     }
+
 }

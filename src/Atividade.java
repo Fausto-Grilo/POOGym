@@ -78,4 +78,6 @@ public class Atividade {
         return duracao;
     }
 
+    public Instrutor getInstrutor(){ return instrutor; }
+
 }
