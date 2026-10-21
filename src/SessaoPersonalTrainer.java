@@ -18,7 +18,6 @@ public class SessaoPersonalTrainer extends Atividade {
      * @param instrutor instrutor responsável pela sessão
      * @param date data e hora da sessão
      * @param duracao duração da sessão em minutos
-     * @param preco preço da sessão (€)
      * @param nivelEnum nível da sessão de treino
      */
     public SessaoPersonalTrainer(String nome, Instrutor instrutor, Tempo date, int duracao, NivelEnum nivelEnum) {
@@ -57,7 +56,7 @@ public class SessaoPersonalTrainer extends Atividade {
             case Avançado:
                 return 28.00;
             default:
-                throw new IllegalArgumentException("Nível desconhecido.");
+                return -1;
         }
     }
 
