@@ -56,14 +56,6 @@ public class Tempo {
         return String.format("%04d-%02d-%02d", ano, mes, dia);
     }
 
-    /**
-     * Devolve a hora e os minutos no formato de texto.
-     *
-     * @return hora no formato hora:minutos
-     */
-    public String getHourAndMinutes() {
-        return String.format("%02d:%02d", hora, minutos);
-    }
 
     /**
      * Converte a hora e os minutos num total de minutos.

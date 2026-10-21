@@ -71,7 +71,7 @@ public class AulaGrupo extends Atividade {
             case CrossFit:
                 return 12.00;
             default:
-                throw new IllegalArgumentException("Modalidade desconhecida.");
+                return -1;
         }
     }
 
