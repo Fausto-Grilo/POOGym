@@ -28,11 +28,11 @@ public class SocioEmpresa extends Socio {
      * Apresenta os dados do sócio de empresa na consola.
      */
     public void showData() {
-        System.out.println("Nome da Empresa: " + nome);
+        System.out.println("Nome da Empresa: " + getNome());
         System.out.println("NIF: " + nif);
-        System.out.println("ID: " + id);
-        System.out.println("Email: " + email);
-        System.out.println("Desconto: " + desconto * 100 + "%\n");
+        System.out.println("ID: " + getId());
+        System.out.println("Email: " + getEmail());
+        System.out.println("Desconto: " + getDesconto() * 100 + "%\n");
     }
 
 

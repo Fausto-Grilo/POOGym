@@ -21,8 +21,8 @@ public class SessaoPersonalTrainer extends Atividade {
      * @param preco preço da sessão (€)
      * @param nivelEnum nível da sessão de treino
      */
-    public SessaoPersonalTrainer(String nome, Instrutor instrutor, Tempo date, int duracao, double preco, NivelEnum nivelEnum) {
-        super(nome, instrutor, date, duracao, preco);
+    public SessaoPersonalTrainer(String nome, Instrutor instrutor, Tempo date, int duracao, NivelEnum nivelEnum) {
+        super(nome, instrutor, date, duracao, obterPrecoNivel(nivelEnum));
 
         this.nivelEnum = nivelEnum;
     }
@@ -31,12 +31,35 @@ public class SessaoPersonalTrainer extends Atividade {
      * Apresenta os dados da sessão de treino.
      */
     public void showData() {
-        System.out.println("Nome: " + nome);
-        System.out.println("Instrutor: " + instrutor.getNome());
-        System.out.println("Data: " + date.getDate());
-        System.out.println("Duração: " + duracao);
-        System.out.println("Nivel: " + nivelEnum.name());
-        System.out.println("\nPreço: " + custoBase + "\n");
+        System.out.println("Nome: " + getNome());
+        System.out.println("Instrutor: " + getInstrutor().getNome());
+        System.out.println("Género do instrutor: " + getInstrutor().getGenero());
+        System.out.println("Formação do instrutor: " + getInstrutor().getFormacao());
+        System.out.println("Data: " + getDate().getDate());
+        System.out.println("Duração: " + getDuracao() + " minutos");
+        System.out.println("Nível: " + nivelEnum.name());
+        System.out.printf("Preço base: %.2f €%n%n", getCustoBase());
     }
+
+
+    /**
+     * Determina o preço base da sessão de personal training a partir do nível.
+     *
+     * @param nivel nível escolhido
+     * @return preço base em euros
+     */
+    private static double obterPrecoNivel(NivelEnum nivel) {
+        switch (nivel) {
+            case Iniciação:
+                return 18.00;
+            case Intermédio:
+                return 22.00;
+            case Avançado:
+                return 28.00;
+            default:
+                throw new IllegalArgumentException("Nível desconhecido.");
+        }
+    }
+
 
 }

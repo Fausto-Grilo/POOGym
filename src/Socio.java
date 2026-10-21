@@ -9,16 +9,16 @@ public class Socio {
     // Variáveis
 
     /** Nome do sócio. */
-    protected String nome;
+    private String nome;
 
     /** Identificador do sócio. */
-    protected int id;
+    private int id;
 
     /** Endereço de correio eletrónico do sócio. */
-    protected String email;
+    private String email;
 
     /** Desconto atribuído ao sócio. */
-    protected double desconto;
+    private double desconto;
 
     /**
      * Cria um sócio com os dados indicados.
@@ -51,5 +51,23 @@ public class Socio {
      */
     public double getDesconto() {
         return desconto;
+    }
+
+    /**
+     * Devolve o identificador único do sócio.
+     *
+     * @return identificador do sócio
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Devolve o endereço de correio eletrónico do sócio.
+     *
+     * @return endereço de correio eletrónico
+     */
+    public String getEmail() {
+        return email;
     }
 }

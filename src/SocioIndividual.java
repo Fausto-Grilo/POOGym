@@ -1,3 +1,5 @@
+import java.time.Year;
+
 /**
  * Representa um sócio individual, com os respetivos dados pessoais
  * e ano de nascimento.
@@ -33,8 +35,8 @@ public class SocioIndividual extends Socio {
      * @param anoNascimento ano de nascimento do sócio
      * @return desconto aplicável ao sócio
      */
-    private static double calcularDesconto(int anoNascimento){
-        int idade = 2026 - anoNascimento;
+    private static double calcularDesconto(int anoNascimento) {
+        int idade = Year.now().getValue() - anoNascimento;
         if(idade < 18){
             return 0.1;
         }else if(idade >= 65){
@@ -47,11 +49,11 @@ public class SocioIndividual extends Socio {
      * Apresenta os dados do sócio individual na consola.
      */
     public void showData(){
-        System.out.println("Nome: "+ nome);
+        System.out.println("Nome: " + getNome());
         System.out.println("Ano de Nascimento: " + anoNascimento);
-        System.out.println("ID: " + id);
-        System.out.println("Email: " + email);
-        System.out.println("Desconto: " + desconto * 100 + "%\n");
+        System.out.println("ID: " + getId());
+        System.out.println("Email: " + getEmail());
+        System.out.println("Desconto: " + getDesconto() * 100 + "%\n");
     }
 
 

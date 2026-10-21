@@ -38,4 +38,21 @@ public class Instrutor {
         return nome;
     }
 
+    /**
+     * Devolve o género do instrutor.
+     *
+     * @return género do instrutor
+     */
+    public String getGenero() {
+        return genero;
+    }
+
+    /**
+     * Devolve a formação do instrutor.
+     *
+     * @return formação do instrutor
+     */
+    public String getFormacao() {
+        return formacao;
+    }
 }
