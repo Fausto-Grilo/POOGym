@@ -44,7 +44,7 @@ public class Tempo {
      * @return data e hora no formato ano-mês-dia hora:minutos
      */
     public String getDate() {
-        return ano + "-" + mes + "-" + dia + " " + hora + ":" + minutos;
+        return String.format("%04d-%02d-%02d %02d:%02d", ano, mes, dia, hora, minutos);
     }
 
     /**
@@ -53,7 +53,7 @@ public class Tempo {
      * @return data no formato ano-mês-dia
      */
     public String getSimpleDate() {
-        return ano + "-" + mes + "-" + dia;
+        return String.format("%04d-%02d-%02d", ano, mes, dia);
     }
 
     /**
@@ -62,7 +62,7 @@ public class Tempo {
      * @return hora no formato hora:minutos
      */
     public String getHourAndMinutes() {
-        return hora + ":" + minutos;
+        return String.format("%02d:%02d", hora, minutos);
     }
 
     /**

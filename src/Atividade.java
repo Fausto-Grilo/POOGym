@@ -10,19 +10,19 @@ public class Atividade {
     // Variáveis
 
     /** Nome da atividade. */
-    protected String nome;
+    private String nome;
 
     /** Instrutor responsável pela atividade. */
-    protected Instrutor instrutor;
+    private Instrutor instrutor;
 
     /** Data e hora da atividade. */
-    protected Tempo date;
+    private Tempo date;
 
     /** Duração da atividade em minutos. */
-    protected int duracao;
+    private int duracao;
 
     /** Preço base da atividade. */
-    protected double custoBase;
+    private double custoBase;
 
     /**
      * Cria uma atividade com os dados indicados.
@@ -78,6 +78,12 @@ public class Atividade {
         return duracao;
     }
 
-    public Instrutor getInstrutor(){ return instrutor; }
-
+    /**
+     * Devolve o instrutor responsável pela atividade.
+     *
+     * @return instrutor responsável
+     */
+    public Instrutor getInstrutor() {
+        return instrutor;
+    }
 }

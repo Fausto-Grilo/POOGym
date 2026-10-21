@@ -1,5 +1,3 @@
-import java.time.LocalDateTime;
-
 /**
  * Representa uma marcação de um sócio numa atividade.
  * Guarda o preço final e o valor poupado com o desconto.
@@ -36,7 +34,7 @@ public class Marcacao {
     public Marcacao(Socio socio, Atividade atividade) {
         this.socio = socio;
         this.atividade = atividade;
-        this.dataHora = atividade.date;
+        this.dataHora = atividade.getDate();
         calcCustoFinal();
     }
 
@@ -58,12 +56,13 @@ public class Marcacao {
      * @return informação sobre o sócio, a atividade, a data,
      *         o custo final e o valor poupado
      */
+    @Override
     public String toString() {
         return "Sócio: " + socio.getNome()
                 + "\nAtividade: " + atividade.getNome()
                 + "\nData e Hora: " + atividade.getDate().getDate()
-                + "\nCusto Final: " + custoFinal
-                + "\nValor Poupado: " + valorPoupado
+                + String.format("\nCusto Final: %.2f €", custoFinal)
+                + String.format("\nValor Poupado: %.2f €", valorPoupado)
                 + "\n\n";
     }
 
