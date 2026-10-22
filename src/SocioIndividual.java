@@ -4,6 +4,8 @@ import java.time.Year;
  * Representa um sócio individual, com os respetivos dados pessoais
  * e ano de nascimento.
  * Herda os atributos da classe {@link Socio}.
+ * @author Fausto Henriques
+ * @author Rodrigo Correia
  */
 public class SocioIndividual extends Socio {
 

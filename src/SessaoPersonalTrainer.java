@@ -1,6 +1,8 @@
 /**
  * Representa uma sessão de treino personalizada.
  * Herda os atributos da classe {@link Atividade}.
+ * @author Fausto Henriques
+ * @author Rodrigo Correia
  */
 public class SessaoPersonalTrainer extends Atividade {
 

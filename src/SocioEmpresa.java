@@ -1,6 +1,8 @@
 /**
  * Representa um sócio de uma empresa.
  * Herda os dados pessoais e o desconto da classe {@link Socio}.
+ * @author Fausto Henriques
+ * @author Rodrigo Correia
  */
 public class SocioEmpresa extends Socio {
 

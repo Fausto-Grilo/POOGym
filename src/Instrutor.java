@@ -1,5 +1,7 @@
 /**
  * Representa um instrutor, com os seus dados pessoais e formação.
+ * @author Fausto Henriques
+ * @author Rodrigo Correia
  */
 public class Instrutor {
 

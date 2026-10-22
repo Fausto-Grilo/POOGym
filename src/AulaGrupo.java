@@ -1,6 +1,8 @@
 /**
  * Representa uma aula de grupo, com uma modalidade e capacidade máxima.
  * Herda os atributos da classe {@link Atividade}.
+ * @author Fausto Henriques
+ * @author Rodrigo Correia
  */
 public class AulaGrupo extends Atividade {
 
