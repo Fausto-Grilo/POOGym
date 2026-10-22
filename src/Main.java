@@ -60,27 +60,6 @@ public class Main {
     }
 
     /**
-     * Lê um NIF e verifica se contém exatamente nove algarismos.
-     *
-     * @param scan leitor de dados introduzidos pelo utilizador
-     * @return NIF introduzido
-     */
-    private static String lerNIF(Scanner scan) {
-        while (true) {
-            System.out.println("Insira o NIF:");
-
-            String nif = scan.nextLine().trim();
-
-            if (nif.matches("[0-9]{9}")) {
-                return nif;
-            }
-
-            System.out.println(
-                    "O NIF deve conter exatamente 9 algarismos. Tente novamente.");
-        }
-    }
-
-    /**
      * Lê um número inteiro e verifica se respeita o valor mínimo.
      *
      * @param scan leitor de dados introduzidos pelo utilizador
@@ -637,7 +616,7 @@ public class Main {
         int id = idCount;
         idCount += 1;
 
-        String nif = lerNIF(scan);
+        String nif = lerTexto(scan, "Insira o NIF: ", "[0-9]{9}");
 
         String email = lerTexto(
                 scan,
