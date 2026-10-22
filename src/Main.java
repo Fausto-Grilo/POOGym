@@ -77,15 +77,15 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    gym.registar_socio_individual();
+                    gym.registarSocioIndividual();
                     break;
 
                 case 2:
-                    gym.registar_socio_empresa();
+                    gym.registarSocioEmpresa();
                     break;
 
                 case 3:
-                    gym.registar_instrutor();
+                    gym.registarInstrutor();
                     break;
 
                 case 4:
@@ -96,11 +96,11 @@ public class Main {
 
                     switch (c) {
                         case 1:
-                            gym.registar_aula_de_grupo();
+                            gym.registarAulaDeGrupo();
                             break;
 
                         case 2:
-                            gym.registar_sessao_personal();
+                            gym.registarSessaoPersonal();
                             break;
 
                         default:
@@ -109,31 +109,31 @@ public class Main {
                     break;
 
                 case 5:
-                    gym.listar_socios();
+                    gym.listarSocios();
                     break;
 
                 case 6:
-                    gym.listar_ativadades();
+                    gym.listarAtividades();
                     break;
 
                 case 7:
-                    gym.criar_marcacao();
+                    gym.criarMarcacao();
                     break;
 
                 case 8:
-                    gym.listar_marcacao();
+                    gym.listarMarcacao();
                     break;
 
                 case 9:
-                    gym.resumir_ativadade();
+                    gym.resumirAtivadade();
                     break;
 
                 case 10:
-                    gym.listar_atividade_popular();
+                    gym.listarAtividadePopular();
                     break;
 
                 case 11:
-                    gym.mostrar_valor_socio();
+                    gym.mostrarValorSocio();
                     break;
 
                 case 12:

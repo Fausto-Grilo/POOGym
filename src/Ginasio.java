@@ -576,7 +576,7 @@ public class Ginasio {
      *
      * @return true se o registo foi efetuado com sucesso
      */
-    public boolean registar_socio_individual() {
+    public boolean registarSocioIndividual() {
         // Recolher dados
         String nome = lerTexto("Insira o nome: ", null);
 
@@ -605,7 +605,7 @@ public class Ginasio {
      *
      * @return true se o registo foi efetuado com sucesso
      */
-    public boolean registar_socio_empresa() {
+    public boolean registarSocioEmpresa() {
         // Recolher dados
         String nome = lerTexto("Insira o nome: ", null);
 
@@ -628,7 +628,7 @@ public class Ginasio {
      *
      * @return true se o registo foi efetuado com sucesso
      */
-    public boolean registar_instrutor() {
+    public boolean registarInstrutor() {
         // Receber dados
         String nome = lerTexto("Insira o Nome:", null);
 
@@ -646,7 +646,7 @@ public class Ginasio {
      *
      * @return true se registada com sucesso, false caso contrário (ex: instrutor indisponível)
      */
-    public boolean registar_aula_de_grupo() {
+    public boolean registarAulaDeGrupo() {
 
         String nome = lerTexto("Insira o nome da Aula:", null);
 
@@ -680,7 +680,7 @@ public class Ginasio {
      *
      * @return true se registada com sucesso, false caso contrário (ex: instrutor indisponível)
      */
-    public boolean registar_sessao_personal() {
+    public boolean registarSessaoPersonal() {
 
         String nome = lerTexto("Insira o nome da Sessão:", null);
 
@@ -710,7 +710,7 @@ public class Ginasio {
     /**
      * Mostra os sócios individuais e os sócios empresa registados.
      */
-    public void listar_socios() {
+    public void listarSocios() {
 
         if (sociosIndividual.isEmpty() && sociosEmpresa.isEmpty()) {
             System.err.println("Não existem sócios registados");
@@ -737,7 +737,7 @@ public class Ginasio {
     /**
      * Mostra as aulas de grupo e as sessões de Personal Training registadas.
      */
-    public void listar_ativadades() {
+    public void listarAtividades() {
 
         if (aulasGrupo.isEmpty() && sessoesPersonalTrainer.isEmpty()) {
             System.err.println("Não Existe Atividades Registadas");
@@ -767,7 +767,7 @@ public class Ginasio {
      *
      * @return true se marcação criada com sucesso, false se erro durante a marcação
      */
-    public boolean criar_marcacao() {
+    public boolean criarMarcacao() {
 
         // Selecionar sócio
         System.out.println("Escolha um sócio");
@@ -808,7 +808,7 @@ public class Ginasio {
     /**
      * Mostra todas as marcações existentes e o respetivo total faturado.
      */
-    public void listar_marcacao() {
+    public void listarMarcacao() {
         if (marcacoes.isEmpty()) {
             System.err.println("Não Existe Marcações");
             return;
@@ -829,7 +829,7 @@ public class Ginasio {
     /**
      * Apresenta o número de sócios e atividades registados.
      */
-    public void resumir_ativadade() {
+    public void resumirAtivadade() {
 
         System.out.println("\nSócios Individuais: " + sociosIndividual.size());
         System.out.println("Sócios Empresa: " + sociosEmpresa.size());
@@ -842,7 +842,7 @@ public class Ginasio {
     /**
      * Identifica e apresenta a atividade com mais marcações.
      */
-    public void listar_atividade_popular() {
+    public void listarAtividadePopular() {
         if (marcacoes.isEmpty()) {
             System.err.println("\nNão existem marcações registadas.\n");
             return;
@@ -885,7 +885,7 @@ public class Ginasio {
     /**
      * Calcula quanto um sócio gastou e poupou no total das suas marcações.
      */
-    public void mostrar_valor_socio() {
+    public void mostrarValorSocio() {
 
         int id = lerInteiro("Insira o ID do sócio", 0);
 
