@@ -57,4 +57,8 @@ public class Instrutor {
     public String getFormacao() {
         return formacao;
     }
+
+    public String toWrite(){
+        return "I | " + nome + " | " + genero + " | " + formacao;
+    }
 }

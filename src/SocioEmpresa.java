@@ -37,5 +37,9 @@ public class SocioEmpresa extends Socio {
         System.out.println("Desconto: " + getDesconto() * 100 + "%\n");
     }
 
+    public String toWrite(){
+        return "SE | " + getNome() + " | " + getId() + " | " + getEmail() + " | " + nif + "\n";
+    }
+
 
 }

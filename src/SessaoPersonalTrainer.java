@@ -42,6 +42,9 @@ public class SessaoPersonalTrainer extends Atividade {
         System.out.printf("Preço base: %.2f €%n%n", getCustoBase());
     }
 
+    public String toWrite(){
+        return "SPT | " + getNome() + " | " + getInstrutor().getNome() + " | " + getDate().getDate() + " | " + getDuracao() + " | " + nivelEnum + "\n";
+    }
 
     /**
      * Determina o preço base da sessão de personal training a partir do nível.

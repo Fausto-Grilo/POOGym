@@ -13,5 +13,7 @@ public enum NivelEnum {
     Intermédio,
 
     /** Nível para quem tem experiência avançada. */
-    Avançado
+    Avançado,
+
+    Lendario
 }

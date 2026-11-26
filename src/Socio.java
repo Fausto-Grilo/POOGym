@@ -4,7 +4,7 @@
  * @author Fausto Henriques
  * @author Rodrigo Correia
  */
-public class Socio {
+abstract class Socio {
 
     // Variáveis
 
@@ -70,4 +70,7 @@ public class Socio {
     public String getEmail() {
         return email;
     }
+
+    abstract void showData();
+    abstract String toWrite();
 }

@@ -5,8 +5,7 @@ import java.util.Scanner;
 import java.time.Year;
 
 /**
- * Gere o menu principal e as operações do sistema de gestão
- * de sócios, atividades e marcações.
+ * Gere o menu principal
  *
  * @author Fausto Henriques
  * @author Rodrigo Correia
@@ -45,6 +44,7 @@ public class Main {
             }
         }
     }
+
 
 
     /**

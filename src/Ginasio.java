@@ -4,80 +4,50 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+/**
+ * Gere as operações do sistema de gestão de sócios, atividades e marcações.
+ *
+ * @author Fausto Henriques
+ * @author Rodrigo Correia
+ */
 public class Ginasio {
 
-    private ArrayList<SocioEmpresa> sociosEmpresa;
-    private ArrayList<SocioIndividual> sociosIndividual;
+    private ArrayList<Socio> socios;
     private ArrayList<Instrutor> instrutores;
-    private ArrayList<AulaGrupo> aulasGrupo;
-    private ArrayList<SessaoPersonalTrainer> sessoesPersonalTrainer;
+    private ArrayList<Atividade> atividades;
     private ArrayList<Marcacao> marcacoes;
     private Scanner scan;
+    private ReadWrite readWrite = new ReadWrite();
 
     /** Contador utilizado para atribuir IDs aos sócios. */
-    private int idCount = 0;
+    int idCount = 0;
+
+    int sICount = 0;
+    int sECount = 0;
+
+    int aGCount = 0;
+    int sPTCount = 0;
+
+
 
     /**
      * Construtor da Classe
      */
 
     public Ginasio() {
-        sociosEmpresa = new ArrayList<>();
-        sociosIndividual = new ArrayList<>();
+        socios = new ArrayList<>();
         instrutores = new ArrayList<>();
-        aulasGrupo = new ArrayList<>();
-        sessoesPersonalTrainer = new ArrayList<>();
+        atividades = new ArrayList<>();
         marcacoes = new ArrayList<>();
         scan = new Scanner(System.in);
 
-        carregarDadosDemo();
+        System.out.println(readWrite.ler(socios,instrutores,atividades, idCount, sICount, sECount, aGCount, sPTCount));
     }
 
     // Lógica
 
-    /**
-     * Cria os dados de demonstração exigidos para a Fase 1.
-     * Os dados são criados em memória; não são lidos nem escritos em ficheiros.
-     */
-    private void carregarDadosDemo() {
 
-        sociosIndividual.add(new SocioIndividual("Ana Silva", idCount++, "ana.silva@example.com", 1999));
-        sociosIndividual.add(new SocioIndividual("João Pereira", idCount++, "joao.pereira@example.com", 2010));
-        sociosIndividual.add(new SocioIndividual("Maria Costa", idCount++, "maria.costa@example.com", 1958));
-
-        sociosEmpresa.add(new SocioEmpresa("Zé Pedro", idCount++, "contacto@horizonte.example", "501234567"));
-        sociosEmpresa.add(new SocioEmpresa("Maria Irene", idCount++, "geral@atlantico.example", "509876543"));
-        sociosEmpresa.add(new SocioEmpresa("Pedro Mendes", idCount++, "info@pinhal.example", "502345678"));
-
-        Instrutor instrutorAna = new Instrutor("Ana Martins", "Feminino", "Licenciatura em Desporto; Yoga");
-        Instrutor instrutorBruno = new Instrutor("Bruno Costa", "Masculino", "Personal Training; CrossFit");
-        Instrutor instrutorCarla = new Instrutor("Carla Santos", "Feminino", "Spinning; Zumba");
-        Instrutor instrutorDiogo = new Instrutor("Diogo Rocha", "Masculino", "Treino funcional; Musculação");
-        instrutores.add(instrutorAna);
-        instrutores.add(instrutorBruno);
-        instrutores.add(instrutorCarla);
-        instrutores.add(instrutorDiogo);
-
-        // Quatro aulas de grupo com os preços definidos no enunciado.
-        aulasGrupo.add(new AulaGrupo("Yoga de manhã", instrutorAna, new Tempo(2026, 10, 26, 9, 0), 60, ModalidadeEnum.Yoga, 10));
-        aulasGrupo.add(new AulaGrupo("Spinning de manhã", instrutorAna, new Tempo(2026, 10, 26, 10, 30), 45, ModalidadeEnum.Spinning, 12));
-        aulasGrupo.add(new AulaGrupo("Zumba de manhã", instrutorCarla, new Tempo(2026, 10, 27, 9, 0), 60, ModalidadeEnum.Zumba, 12));
-        aulasGrupo.add(new AulaGrupo("CrossFit de manhã", instrutorBruno, new Tempo(2026, 10, 27, 10, 30), 60, ModalidadeEnum.CrossFit, 8));
-
-        // Quatro sessões de PT com os preços definidos no enunciado.
-        sessoesPersonalTrainer.add(new SessaoPersonalTrainer("PT Iniciação A", instrutorBruno, new Tempo(2026, 10, 28, 9, 0), 45, NivelEnum.Iniciação));
-        sessoesPersonalTrainer.add(new SessaoPersonalTrainer("PT Intermédio A", instrutorCarla, new Tempo(2026, 10, 28, 10, 0), 60, NivelEnum.Intermédio));
-        sessoesPersonalTrainer.add(new SessaoPersonalTrainer("PT Avançado A", instrutorDiogo, new Tempo(2026, 10, 29, 9, 0), 60, NivelEnum.Avançado));
-        sessoesPersonalTrainer.add(new SessaoPersonalTrainer("PT Iniciação B", instrutorAna, new Tempo(2026, 10, 29, 10, 30), 45, NivelEnum.Iniciação));
-
-        // Seis marcações iniciais para demonstrar descontos e listagens.
-        marcacoes.add(new Marcacao(sociosIndividual.get(0), aulasGrupo.get(0)));
-        marcacoes.add(new Marcacao(sociosIndividual.get(1), aulasGrupo.get(1)));
-        marcacoes.add(new Marcacao(sociosIndividual.get(2), aulasGrupo.get(2)));
-        marcacoes.add(new Marcacao(sociosEmpresa.get(0), aulasGrupo.get(3)));
-        marcacoes.add(new Marcacao(sociosEmpresa.get(1), sessoesPersonalTrainer.get(0)));
-        marcacoes.add(new Marcacao(sociosEmpresa.get(2), sessoesPersonalTrainer.get(1)));
-    }
 
     /**
      * Lê um texto e verifica se está preenchido e se corresponde ao formato indicado.
@@ -209,98 +179,30 @@ public class Ginasio {
      *
      * @return sócio escolhido, ou null se a lista estiver vazia
      */
-    private SocioIndividual selecionarSocioIndividual() {
-
-        if (sociosIndividual.isEmpty()) {
-            System.err.println("Não existem socios individuais registados.");
-            return null;
-        }
-
-        while (true) {
-            System.out.println("Lista de Sócios Individuais:");
-
-            for (int i = 0; i < sociosIndividual.size(); i++) {
-                System.out.println(i + " - " + sociosIndividual.get(i).getNome());
-            }
-
-            int escolha = lerInteiro("Escolha um Sócio Individual:", 0);
-
-            if (escolha < sociosIndividual.size()) {
-                return sociosIndividual.get(escolha);
-            }
-
-            System.out.println("Escolha um sócio válido.");
-        }
-    }
-
-    /**
-     * Permite escolher um sócio empresa da lista disponível.
-     *
-     * @return sócio escolhido, ou null se a lista estiver vazia
-     */
-    private SocioEmpresa selecionarSocioEmpresa() {
-
-        if (sociosEmpresa.isEmpty()) {
-            System.err.println("Não existem socios empresa registados.");
-            return null;
-        }
-
-        while (true) {
-            System.out.println("Lista de Sócios Empresa:");
-
-            for (int i = 0; i < sociosEmpresa.size(); i++) {
-                System.out.println(i + " - " + sociosEmpresa.get(i).getNome());
-            }
-
-            int escolha = lerInteiro("Escolha um Sócio Empresa:", 0);
-
-            if (escolha < sociosEmpresa.size()) {
-                return sociosEmpresa.get(escolha);
-            }
-
-            System.out.println("Escolha um sócio válido.");
-        }
-    }
-
-    /**
-     * Permite escolher o tipo de sócio e selecionar um sócio registado.
-     *
-     * @return sócio escolhido, ou null se o utilizador voltar atrás
-     */
     private Socio selecionarSocio() {
 
+        if (socios.isEmpty()) {
+            System.err.println("Não existem socios registados.");
+            return null;
+        }
+
         while (true) {
-            System.out.println("1- Sócio Individual");
-            System.out.println("2- Socio Empresa");
-            System.out.println("3- Back");
+            System.out.println("Lista de Sócios:");
 
-            int choice = lerInteiro("Escolha", 1);
-
-            switch (choice) {
-                case 1: {
-                    SocioIndividual socioIndividual = selecionarSocioIndividual();
-                    if (socioIndividual != null) {
-                        return socioIndividual;
-                    }
-                    continue;
-                }
-
-                case 2: {
-                    SocioEmpresa socioEmpresa = selecionarSocioEmpresa();
-                    if (socioEmpresa != null) {
-                        return socioEmpresa;
-                    }
-                    continue;
-                }
-
-                case 3:
-                    return null;
-
-                default:
-                    continue;
+            for (int i = 0; i < socios.size(); i++) {
+                System.out.println(i + " - " + socios.get(i).getNome());
             }
+
+            int escolha = lerInteiro("Escolha um Sócio:", 0);
+
+            if (escolha < socios.size()) {
+                return socios.get(escolha);
+            }
+
+            System.out.println("Escolha um sócio válido.");
         }
     }
+
 
     /**
      * Apresenta as modalidades disponíveis e permite escolher uma.
@@ -355,108 +257,36 @@ public class Ginasio {
      *
      * @return aula escolhida, ou null se a lista estiver vazia ou cheia
      */
-    private AulaGrupo selecionarAulaGrupo() {
+    private Atividade selecionarAtividade() {
 
-        if (aulasGrupo.isEmpty()) {
+        if (atividades.isEmpty()) {
             System.err.println("Não existem aulas de grupo registadas.");
             return null;
         }
 
         while (true) {
-            System.out.println("Lista de Aulas de Grupo:");
+            System.out.println("Lista de Ativades:");
 
-            for (int i = 0; i < aulasGrupo.size(); i++) {
-                System.out.println(i + " - " + aulasGrupo.get(i).getNome());
+            for (int i = 0; i < atividades.size(); i++) {
+                System.out.println(i + " - " + atividades.get(i).getNome());
             }
 
-            int escolha = lerInteiro("Escolha uma Aula de Grupo:", 0);
+            int escolha = lerInteiro("Escolha uma atividade:", 0);
 
-            if (escolha < aulasGrupo.size()) {
-                if (!isAGFull(aulasGrupo.get(escolha))) {
-                    return aulasGrupo.get(escolha);
+            if (escolha < atividades.size()) {
+                if (!isFull(atividades.get(escolha))) {
+                    return atividades.get(escolha);
                 } else {
-                    System.err.println("Aula cheia, escolha outra");
+                    System.err.println("Atividade cheia, escolha outra");
                     return null;
                 }
             } else {
-                System.err.println("Escolha uma aula válida.");
+                System.err.println("Escolha uma atividade válida.");
             }
         }
     }
 
-    /**
-     * Permite escolher uma sessão de Personal Training da lista disponível.
-     *
-     * @return sessão escolhida, ou null se a lista estiver vazia ou cheia
-     */
-    private SessaoPersonalTrainer selecionarSessaoPT() {
 
-        if (sessoesPersonalTrainer.isEmpty()) {
-            System.err.println("Não existem sessões de PT registadas.");
-            return null;
-        }
-
-        while (true) {
-            System.out.println("Lista de Sessões de Personal Training:");
-
-            for (int i = 0; i < sessoesPersonalTrainer.size(); i++) {
-                System.out.println(i + " - " + sessoesPersonalTrainer.get(i).getNome());
-            }
-
-            int escolha = lerInteiro("Escolha uma Sessão de Personal Training:", 0);
-
-            if (escolha < sessoesPersonalTrainer.size()) {
-                if (!isSPTFull(sessoesPersonalTrainer.get(escolha))) {
-                    return sessoesPersonalTrainer.get(escolha);
-                } else {
-                    System.err.println("Sessão cheia, escolha outra");
-                    return null;
-                }
-            } else {
-                System.err.println("Escolha uma sessão válida.");
-            }
-
-            System.out.println("Escolha uma sessão válida.");
-        }
-    }
-
-    /**
-     * Permite escolher o tipo de atividade e selecionar uma atividade registada.
-     *
-     * @return atividade escolhida, ou null se o utilizador voltar atrás
-     */
-    private Atividade selecionarAtividade() {
-
-        while (true) {
-            System.out.println("1- Aula de Grupo");
-            System.out.println("2- Sessão Personal Training");
-            System.out.println("3- Back");
-
-            int choice = lerInteiro("Escolha", 1);
-
-            switch (choice) {
-                case 1:
-                    Atividade aG = selecionarAulaGrupo();
-                    if (aG != null) {
-                        return aG;
-                    }
-                    continue;
-
-                case 2:
-                    Atividade sPT = selecionarSessaoPT();
-                    if (sPT != null) {
-                        return sPT;
-                    }
-                    continue;
-
-                case 3:
-                    return null;
-
-                default:
-                    continue;
-            }
-        }
-    }
 
     /**
      * Verifica se o sócio já tem uma marcação que coincide com o horário da atividade escolhida.
@@ -503,10 +333,6 @@ public class Ginasio {
      */
     private boolean verificarSobrePosicoesInstrutor(Instrutor instrutor, Tempo tempo, int duracao) {
 
-        ArrayList<Atividade> atividades = new ArrayList<>();
-        atividades.addAll(aulasGrupo);
-        atividades.addAll(sessoesPersonalTrainer);
-
         for (Atividade atividade : atividades) {
             if (atividade.getInstrutor().equals(instrutor)) {
 
@@ -536,34 +362,29 @@ public class Ginasio {
     /**
      * Verifica se a aula já está cheia.
      *
-     * @param aulaGrupo aula que queremos verificar
+     * @param atividade atividade que queremos verificar
      * @return true se estiver cheia, false se ainda houver vagas
      */
-    private boolean isAGFull(AulaGrupo aulaGrupo) {
+    private boolean isFull(Atividade atividade) {
 
-        int totalMarcacoes = 0;
+        if(atividade instanceof AulaGrupo) {
+            int totalMarcacoes = 0;
 
-        for (Marcacao marcacao : marcacoes) {
-            if (marcacao.getAtividade() == aulaGrupo) {
-                totalMarcacoes++;
+            for (Marcacao marcacao : marcacoes) {
+                if (marcacao.getAtividade() == atividade) {
+                    totalMarcacoes++;
+                }
             }
-        }
 
-        return totalMarcacoes >= aulaGrupo.getMaxCap();
-    }
-
-    /**
-     * Verifica se a sessão de PT já está cheia.
-     *
-     * @param sessaoPersonalTrainer sessão que queremos verificar
-     * @return true se estiver cheia, false se ainda houver vaga
-     */
-    private boolean isSPTFull(SessaoPersonalTrainer sessaoPersonalTrainer) {
-
-        for (Marcacao marcacao : marcacoes) {
-            if (marcacao.getAtividade() == sessaoPersonalTrainer) {
-                return true;
+            return totalMarcacoes >= ((AulaGrupo) atividade).getMaxCap();
+        }else if(atividade instanceof SessaoPersonalTrainer){
+            for (Marcacao marcacao : marcacoes) {
+                if (marcacao.getAtividade() == atividade) {
+                    return true;
+                }
             }
+
+            return false;
         }
 
         return false;
@@ -596,7 +417,8 @@ public class Ginasio {
         } while (anoNascimento > Year.now().getValue());
 
         // Registar sócio individual
-        sociosIndividual.add(new SocioIndividual(nome, id, email, anoNascimento));
+        socios.add(new SocioIndividual(nome, id, email, anoNascimento));
+        sICount++;
         return true;
     }
 
@@ -619,7 +441,8 @@ public class Ginasio {
                 "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
 
         // Registar sócio empresa
-        sociosEmpresa.add(new SocioEmpresa(nome, id, email, nif));
+        socios.add(new SocioEmpresa(nome, id, email, nif));
+        sECount++;
         return true;
     }
 
@@ -669,9 +492,9 @@ public class Ginasio {
 
         int maxCap = lerInteiro("Insira a capacidade máxima: ", 1);
 
-        aulasGrupo.add(new AulaGrupo(
+        atividades.add(new AulaGrupo(
                 nome, instrutor, data, duracao, modalidade, maxCap));
-
+        aGCount++;
         return true;
     }
 
@@ -701,8 +524,9 @@ public class Ginasio {
 
         NivelEnum nivel = selecionarNivel();
 
-        sessoesPersonalTrainer.add(new SessaoPersonalTrainer(
+        atividades.add(new SessaoPersonalTrainer(
                 nome, instrutor, data, duracao, nivel));
+        sPTCount++;
 
         return true;
     }
@@ -712,25 +536,13 @@ public class Ginasio {
      */
     public void listarSocios() {
 
-        if (sociosIndividual.isEmpty() && sociosEmpresa.isEmpty()) {
+        if (socios.isEmpty() && socios.isEmpty()) {
             System.err.println("Não existem sócios registados");
             return;
         }
 
-        if (!sociosIndividual.isEmpty()) {
-            System.out.println("\nSócios Individuais\n");
-
-            for (int i = 0; i < sociosIndividual.size(); i++) {
-                sociosIndividual.get(i).showData();
-            }
-        }
-
-        if (!sociosEmpresa.isEmpty()) {
-            System.out.println("\nSócios Empresas\n");
-
-            for (int i = 0; i < sociosEmpresa.size(); i++) {
-                sociosEmpresa.get(i).showData();
-            }
+        for(Socio s: socios){
+            s.showData();
         }
     }
 
@@ -739,26 +551,18 @@ public class Ginasio {
      */
     public void listarAtividades() {
 
-        if (aulasGrupo.isEmpty() && sessoesPersonalTrainer.isEmpty()) {
+        if (atividades.isEmpty()) {
             System.err.println("Não Existe Atividades Registadas");
             return;
         }
 
-        if (!aulasGrupo.isEmpty()) {
-            System.out.println("\nAulas de Grupo\n");
+        System.out.println("\nAulas de Grupo\n");
 
-            for (int i = 0; i < aulasGrupo.size(); i++) {
-                aulasGrupo.get(i).showData();
-            }
+        for (int i = 0; i < atividades.size(); i++) {
+            atividades.get(i).showData();
         }
 
-        if (!sessoesPersonalTrainer.isEmpty()) {
-            System.out.println("\nSessões de Personal Trainer\n");
 
-            for (int i = 0; i < sessoesPersonalTrainer.size(); i++) {
-                sessoesPersonalTrainer.get(i).showData();
-            }
-        }
     }
 
     /**
@@ -831,16 +635,19 @@ public class Ginasio {
      */
     public void resumirAtivadade() {
 
-        System.out.println("\nSócios Individuais: " + sociosIndividual.size());
-        System.out.println("Sócios Empresa: " + sociosEmpresa.size());
-        System.out.println("Aulas de Grupo: " + aulasGrupo.size());
-        System.out.println(
-                "Sessões de Personal Training: "
-                        + sessoesPersonalTrainer.size() + '\n');
+
+
+
+        System.out.println("Sócios Individual: " + sICount);
+        System.out.println("Sócios Empresa: " + sECount);
+        System.out.println("Aulas de Grupo: " + aGCount);
+        System.out.println("Sessões de Personal Training: " + sPTCount + '\n');
     }
 
     /**
      * Identifica e apresenta a atividade com mais marcações.
+     *
+     * Corrigir loop
      */
     public void listarAtividadePopular() {
         if (marcacoes.isEmpty()) {
@@ -912,5 +719,6 @@ public class Ginasio {
      */
     public void close() {
         scan.close();
+        //readWrite.escrever(socios, instrutores, atividades);
     }
 }

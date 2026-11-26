@@ -55,6 +55,9 @@ public class AulaGrupo extends Atividade {
      */
     public int getMaxCap(){return maxCap;}
 
+    public String toWrite(){
+        return "AG | " + getNome() + " | " + getInstrutor().getNome() + " | " + getDate().getDate() + " | " + getDuracao() + " | " + modalidadeEnum + " | " + maxCap + "\n";
+    }
 
     /**
      * Determina o preço base da aula de grupo a partir da modalidade.
@@ -76,5 +79,6 @@ public class AulaGrupo extends Atividade {
                 return -1;
         }
     }
+
 
 }

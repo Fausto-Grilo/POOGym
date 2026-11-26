@@ -58,5 +58,8 @@ public class SocioIndividual extends Socio {
         System.out.println("Desconto: " + getDesconto() * 100 + "%\n");
     }
 
+    public String toWrite(){
+        return "SI | " + getNome() + " | " + getId() + " | " + getEmail() + " | " + anoNascimento + "\n";
+    }
 
 }

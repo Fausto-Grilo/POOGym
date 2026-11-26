@@ -5,7 +5,7 @@
  * @author Fausto Henriques
  * @author Rodrigo Correia
  */
-public class Atividade {
+abstract class Atividade {
 
     // Variáveis
 
@@ -33,8 +33,7 @@ public class Atividade {
      * @param duracao duração em minutos
      * @param custoBase preço base da atividade em euros
      */
-    public Atividade(String nome, Instrutor instrutor, Tempo date,
-                     int duracao, double custoBase) {
+    public Atividade(String nome, Instrutor instrutor, Tempo date, int duracao, double custoBase) {
         this.nome = nome;
         this.instrutor = instrutor;
         this.date = date;
@@ -86,4 +85,8 @@ public class Atividade {
     public Instrutor getInstrutor() {
         return instrutor;
     }
+
+    abstract void showData();
+    abstract String toWrite();
+
 }
